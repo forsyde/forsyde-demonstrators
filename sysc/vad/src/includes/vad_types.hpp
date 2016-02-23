@@ -15,7 +15,7 @@
 #define VADTYPES_HPP
 
 #include <forsyde.hpp>
-#include "includes/vad.h"
+#include "src/includes/vad.h"
 #include <array>
 #include <cmath>
 

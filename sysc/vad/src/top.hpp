@@ -45,7 +45,7 @@ SC_MODULE(top)
     
     SC_CTOR(top)
     {
-        SDF::make_file_source("VADFilesource1", VADFilesource_func, "../files/source_data.txt", e12_13_14_15_16_17_18);
+        SDF::make_file_source("VADFilesource1", VADFilesource_func, "files/source_data.txt", e12_13_14_15_16_17_18);
         //~ SDF::make_unzip("VADFilesource1_unzip", e12_13_14_15_16_17_18, {1,1,1,1,1,1,1}, e12, e13, e14, e15, e16, e17, e18);
         auto VADFilesource1_unzip = new SDF::unzipN<r_t,r_t,r_t,short,short,rc_t,short>("VADFilesource1_unzip", {1,1,1,1,1,1,1});
         VADFilesource1_unzip->iport1(e12_13_14_15_16_17_18);
@@ -88,7 +88,7 @@ SC_MODULE(top)
         
         SDF::make_comb("VADhangover1", VADhangover_func, 1, 1, e19, e11);
         
-        SDF::make_file_sink("VADFilesink1", VADFilesink_func, "../files/sink_data.txt", e19);
+        SDF::make_file_sink("VADFilesink1", VADFilesink_func, "files/sink_data.txt", e19);
         
         // FIXME: REMOVE! only for test:
         //~ SDF::make_sink("test_sink", [](rav1_t val){std::cout << val << std::endl;}, e4);

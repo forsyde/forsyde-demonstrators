@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graph name="vad">
+   <edge name="vad_fifo_0" moc="sdf" type="short int" source="vad_SpectralComparison1"
+         source_port="oport1"
+         target="vad_ThresholdAdaptation1_zip"
+         target_port="port_3"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="comb2"
+         target_kind="zipN"/>
+   <edge name="vad_fifo_1" moc="sdf" type="short int" source="vad_ToneDetection1"
+         source_port="oport1"
+         target="vad_ThresholdAdaptation1_zip"
+         target_port="port_1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="comb"
+         target_kind="zipN"/>
+   <edge name="vad_fifo_2" moc="sdf" type="short int" source="vad_VADdecision1"
+         source_port="oport1"
+         target="vad_VADhangover1"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="comb2"
+         target_kind="comb"/>
+   <edge name="vad_fifo_3" moc="sdf" type="short int" source="vad_VADFilesource1_unzip"
+         source_port="port_3"
+         target="vad_ACFAveraging1"
+         target_port="iport3"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="unzipN"
+         target_kind="comb3"/>
+   <edge name="vad_fifo_4" moc="sdf" type="short int" source="vad_VADFilesource1_unzip"
+         source_port="port_2"
+         target="vad_EnergyComputation1"
+         target_port="iport3"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="unzipN"
+         target_kind="comb3"/>
+   <edge name="vad_fifo_5" moc="sdf" type="short int" source="vad_VADFilesource1_unzip"
+         source_port="port_0"
+         target="vad_ThresholdAdaptation1_zip"
+         target_port="port_0"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="unzipN"
+         target_kind="zipN"/>
+   <edge name="vad_fifo_6" moc="sdf" type="short int" source="vad_VADhangover1"
+         source_port="oport1"
+         target="vad_VADFilesink1"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="comb"
+         target_kind="file_sink"/>
+   <edge name="vad_fifo_7" moc="sdf" type="r_t" source="vad_ACFAveraging1_unzip"
+         source_port="oport1"
+         target="vad_SpectralComparison1"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="unzip"
+         target_kind="comb2"/>
+   <edge name="vad_fifo_8" moc="sdf" type="r_t" source="vad_ACFAveraging1_unzip"
+         source_port="oport2"
+         target="vad_PredictorValues1"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="unzip"
+         target_kind="comb"/>
+   <edge name="vad_fifo_9" moc="sdf" type="rav1_t" source="vad_PredictorValues1"
+         source_port="oport1"
+         target="vad_SpectralComparison1"
+         target_port="iport2"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="comb"
+         target_kind="comb2"/>
+   <edge name="vad_fifo_10" moc="sdf" type="rav1_t" source="vad_PredictorValues1"
+         source_port="oport1"
+         target="vad_ThresholdAdaptation1_zip"
+         target_port="port_4"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="comb"
+         target_kind="zipN"/>
+   <edge name="vad_fifo_11" moc="sdf" type="pvad_acf0_t"
+         source="vad_EnergyComputation1_unzip"
+         source_port="oport1"
+         target="vad_ThresholdAdaptation1_zip"
+         target_port="port_2"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="unzip"
+         target_kind="zipN"/>
+   <edge name="vad_fifo_12" moc="sdf" type="rav1_t"
+         source="vad_ThresholdAdaptation1_unzip"
+         source_port="oport1"
+         target="vad_e7_init"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="unzip"
+         target_kind="delay"/>
+   <edge name="vad_fifo_13" moc="sdf" type="rav1_t" source="vad_e7_init"
+         source_port="oport1"
+         target="vad_EnergyComputation1"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="delay"
+         target_kind="comb3"/>
+   <edge name="vad_fifo_14" moc="sdf" type="Pfloat"
+         source="vad_EnergyComputation1_unzip"
+         source_port="oport2"
+         target="vad_VADdecision1"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="unzip"
+         target_kind="comb2"/>
+   <edge name="vad_fifo_15" moc="sdf" type="Pfloat"
+         source="vad_ThresholdAdaptation1_unzip"
+         source_port="oport2"
+         target="vad_VADdecision1"
+         target_port="iport2"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="unzip"
+         target_kind="comb2"/>
+   <edge name="vad_fifo_16" moc="sdf" type="r_t" source="vad_VADFilesource1_unzip"
+         source_port="port_6"
+         target="vad_ACFAveraging1"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="unzipN"
+         target_kind="comb3"/>
+   <edge name="vad_fifo_17" moc="sdf" type="r_t" source="vad_VADFilesource1_unzip"
+         source_port="port_5"
+         target="vad_EnergyComputation1"
+         target_port="iport2"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="unzipN"
+         target_kind="comb3"/>
+   <edge name="vad_fifo_18" moc="sdf" type="r_t" source="vad_VADFilesource1_unzip"
+         source_port="port_4"
+         target="vad_ACFAveraging1"
+         target_port="iport2"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="unzipN"
+         target_kind="comb3"/>
+   <edge name="vad_fifo_19" moc="sdf" type="rc_t" source="vad_VADFilesource1_unzip"
+         source_port="port_1"
+         target="vad_ToneDetection1"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="1"
+         source_kind="unzipN"
+         target_kind="comb"/>
+   <edge name="vad_fifo_20" moc="sdf" type="r_t.r_t" source="vad_ACFAveraging1"
+         source_port="oport1"
+         target="vad_ACFAveraging1_unzip"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="2"
+         source_kind="comb3"
+         target_kind="unzip"/>
+   <edge name="vad_fifo_21" moc="sdf" type="rav1_t.short.pvad_acf0_t.short.short"
+         source="vad_ThresholdAdaptation1_zip"
+         source_port="oport1"
+         target="vad_ThresholdAdaptation1"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="5"
+         source_kind="zipN"
+         target_kind="comb"/>
+   <edge name="vad_fifo_22" moc="sdf" type="pvad_acf0_t.Pfloat"
+         source="vad_EnergyComputation1"
+         source_port="oport1"
+         target="vad_EnergyComputation1_unzip"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="2"
+         source_kind="comb3"
+         target_kind="unzip"/>
+   <edge name="vad_fifo_23" moc="sdf" type="rav1_t.Pfloat"
+         source="vad_ThresholdAdaptation1"
+         source_port="oport1"
+         target="vad_ThresholdAdaptation1_unzip"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="2"
+         source_kind="comb"
+         target_kind="unzip"/>
+   <edge name="vad_fifo_24" moc="sdf" type="r_t.r_t.r_t.short.short.rc_t.short"
+         source="vad_VADFilesource1"
+         source_port="oport1"
+         target="vad_VADFilesource1_unzip"
+         target_port="iport1"
+         token_size=""
+         initial_tokens="0"
+         tokens=""
+         signal_count="7"
+         source_kind="file_source"
+         target_kind="unzipN"/>
+   <node name="vad_VADFilesource1" moc="sdf" kind="file_source"
+         function="VADFilesource_func"
+         init_val=""
+         take=""
+         n="">
+      <output name="oport1" type="r_t.r_t.r_t.short.short.rc_t.short" rate=""
+              target="vad_VADFilesource1_unzip"
+              target_port="iport1"
+              output_count="7"/>
+   </node>
+   <node name="vad_VADFilesource1_unzip" moc="sdf" kind="unzipN" function="" init_val=""
+         take=""
+         n="">
+      <output name="port_6" type="r_t" rate="1" target="vad_ACFAveraging1"
+              target_port="iport1"
+              output_count="1"/>
+      <output name="port_5" type="r_t" rate="1" target="vad_EnergyComputation1"
+              target_port="iport2"
+              output_count="1"/>
+      <output name="port_4" type="r_t" rate="1" target="vad_ACFAveraging1"
+              target_port="iport2"
+              output_count="1"/>
+      <output name="port_3" type="short int" rate="1" target="vad_ACFAveraging1"
+              target_port="iport3"
+              output_count="1"/>
+      <output name="port_2" type="short int" rate="1" target="vad_EnergyComputation1"
+              target_port="iport3"
+              output_count="1"/>
+      <output name="port_1" type="rc_t" rate="1" target="vad_ToneDetection1"
+              target_port="iport1"
+              output_count="1"/>
+      <output name="port_0" type="short int" rate="1" target="vad_ThresholdAdaptation1_zip"
+              target_port="port_0"
+              output_count="1"/>
+      <input name="iport1" type="r_t.r_t.r_t.short.short.rc_t.short" rate="1"
+             source="vad_VADFilesource1"
+             source_port="oport1"
+             input_count="7"/>
+   </node>
+   <node name="vad_ToneDetection1" moc="sdf" kind="comb" function="ToneDetection_func"
+         init_val=""
+         take=""
+         n="">
+      <output name="oport1" type="short int" rate="1" target="vad_ThresholdAdaptation1_zip"
+              target_port="port_1"
+              output_count="1"/>
+      <input name="iport1" type="rc_t" rate="1" source="vad_VADFilesource1_unzip"
+             source_port="port_1"
+             input_count="1"/>
+   </node>
+   <node name="vad_EnergyComputation1" moc="sdf" kind="comb3"
+         function="EnergyComputation_func"
+         init_val=""
+         take=""
+         n="">
+      <output name="oport1" type="pvad_acf0_t.Pfloat" rate="1"
+              target="vad_EnergyComputation1_unzip"
+              target_port="iport1"
+              output_count="2"/>
+      <input name="iport1" type="rav1_t" rate="1" source="vad_e7_init" source_port="oport1"
+             input_count="1"/>
+      <input name="iport2" type="r_t" rate="1" source="vad_VADFilesource1_unzip"
+             source_port="port_5"
+             input_count="1"/>
+      <input name="iport3" type="short int" rate="1" source="vad_VADFilesource1_unzip"
+             source_port="port_2"
+             input_count="1"/>
+   </node>
+   <node name="vad_EnergyComputation1_unzip" moc="sdf" kind="unzip" function=""
+         init_val=""
+         take=""
+         n="">
+      <output name="oport1" type="pvad_acf0_t" rate="1" target="vad_ThresholdAdaptation1_zip"
+              target_port="port_2"
+              output_count="1"/>
+      <output name="oport2" type="Pfloat" rate="1" target="vad_VADdecision1"
+              target_port="iport1"
+              output_count="1"/>
+      <input name="iport1" type="pvad_acf0_t.Pfloat" rate="1"
+             source="vad_EnergyComputation1"
+             source_port="oport1"
+             input_count="2"/>
+   </node>
+   <node name="vad_ACFAveraging1" moc="sdf" kind="comb3" function="ACFAveraging_func"
+         init_val=""
+         take=""
+         n="">
+      <output name="oport1" type="r_t.r_t" rate="1" target="vad_ACFAveraging1_unzip"
+              target_port="iport1"
+              output_count="2"/>
+      <input name="iport1" type="r_t" rate="1" source="vad_VADFilesource1_unzip"
+             source_port="port_6"
+             input_count="1"/>
+      <input name="iport2" type="r_t" rate="1" source="vad_VADFilesource1_unzip"
+             source_port="port_4"
+             input_count="1"/>
+      <input name="iport3" type="short int" rate="1" source="vad_VADFilesource1_unzip"
+             source_port="port_3"
+             input_count="1"/>
+   </node>
+   <node name="vad_ACFAveraging1_unzip" moc="sdf" kind="unzip" function="" init_val=""
+         take=""
+         n="">
+      <output name="oport1" type="r_t" rate="1" target="vad_SpectralComparison1"
+              target_port="iport1"
+              output_count="1"/>
+      <output name="oport2" type="r_t" rate="1" target="vad_PredictorValues1"
+              target_port="iport1"
+              output_count="1"/>
+      <input name="iport1" type="r_t.r_t" rate="1" source="vad_ACFAveraging1"
+             source_port="oport1"
+             input_count="2"/>
+   </node>
+   <node name="vad_PredictorValues1" moc="sdf" kind="comb"
+         function="PredictorValues_func"
+         init_val=""
+         take=""
+         n="">
+      <output name="oport1" type="rav1_t" rate="1"
+              target="vad_SpectralComparison1 vad_ThresholdAdaptation1_zip"
+              target_port="iport2 port_4"
+              output_count="1"/>
+      <input name="iport1" type="r_t" rate="1" source="vad_ACFAveraging1_unzip"
+             source_port="oport2"
+             input_count="1"/>
+   </node>
+   <node name="vad_SpectralComparison1" moc="sdf" kind="comb2"
+         function="SpectralComparison_func"
+         init_val=""
+         take=""
+         n="">
+      <output name="oport1" type="short int" rate="1" target="vad_ThresholdAdaptation1_zip"
+              target_port="port_3"
+              output_count="1"/>
+      <input name="iport1" type="r_t" rate="1" source="vad_ACFAveraging1_unzip"
+             source_port="oport1"
+             input_count="1"/>
+      <input name="iport2" type="rav1_t" rate="1" source="vad_PredictorValues1"
+             source_port="oport1"
+             input_count="1"/>
+   </node>
+   <node name="vad_ThresholdAdaptation1_zip" moc="sdf" kind="zipN" function=""
+         init_val=""
+         take=""
+         n="">
+      <output name="oport1" type="rav1_t.short.pvad_acf0_t.short.short" rate="1"
+              target="vad_ThresholdAdaptation1"
+              target_port="iport1"
+              output_count="5"/>
+      <input name="port_4" type="rav1_t" rate="1" source="vad_PredictorValues1"
+             source_port="oport1"
+             input_count="1"/>
+      <input name="port_3" type="short int" rate="1" source="vad_SpectralComparison1"
+             source_port="oport1"
+             input_count="1"/>
+      <input name="port_2" type="pvad_acf0_t" rate="1" source="vad_EnergyComputation1_unzip"
+             source_port="oport1"
+             input_count="1"/>
+      <input name="port_1" type="short int" rate="1" source="vad_ToneDetection1"
+             source_port="oport1"
+             input_count="1"/>
+      <input name="port_0" type="short int" rate="1" source="vad_VADFilesource1_unzip"
+             source_port="port_0"
+             input_count="1"/>
+   </node>
+   <node name="vad_ThresholdAdaptation1" moc="sdf" kind="comb"
+         function="ThresholdAdaptation_func"
+         init_val=""
+         take=""
+         n="">
+      <output name="oport1" type="rav1_t.Pfloat" rate="1"
+              target="vad_ThresholdAdaptation1_unzip"
+              target_port="iport1"
+              output_count="2"/>
+      <input name="iport1" type="rav1_t.short.pvad_acf0_t.short.short" rate="1"
+             source="vad_ThresholdAdaptation1_zip"
+             source_port="oport1"
+             input_count="5"/>
+   </node>
+   <node name="vad_ThresholdAdaptation1_unzip" moc="sdf" kind="unzip" function=""
+         init_val=""
+         take=""
+         n="">
+      <output name="oport1" type="rav1_t" rate="1" target="vad_e7_init" target_port="iport1"
+              output_count="1"/>
+      <output name="oport2" type="Pfloat" rate="1" target="vad_VADdecision1"
+              target_port="iport2"
+              output_count="1"/>
+      <input name="iport1" type="rav1_t.Pfloat" rate="1" source="vad_ThresholdAdaptation1"
+             source_port="oport1"
+             input_count="2"/>
+   </node>
+   <node name="vad_e7_init" moc="sdf" kind="delay" function=""
+         init_val="([24576, 0, 0, 0, 0, 0, 0, 0, 0], 7)"
+         take=""
+         n="">
+      <output name="oport1" type="rav1_t" rate="1" target="vad_EnergyComputation1"
+              target_port="iport1"
+              output_count="1"/>
+      <input name="iport1" type="rav1_t" rate="1" source="vad_ThresholdAdaptation1_unzip"
+             source_port="oport1"
+             input_count="1"/>
+   </node>
+   <node name="vad_VADdecision1" moc="sdf" kind="comb2" function="VADdecision_func"
+         init_val=""
+         take=""
+         n="">
+      <output name="oport1" type="short int" rate="1" target="vad_VADhangover1"
+              target_port="iport1"
+              output_count="1"/>
+      <input name="iport1" type="Pfloat" rate="1" source="vad_EnergyComputation1_unzip"
+             source_port="oport2"
+             input_count="1"/>
+      <input name="iport2" type="Pfloat" rate="1" source="vad_ThresholdAdaptation1_unzip"
+             source_port="oport2"
+             input_count="1"/>
+   </node>
+   <node name="vad_VADhangover1" moc="sdf" kind="comb" function="VADhangover_func"
+         init_val=""
+         take=""
+         n="">
+      <output name="oport1" type="short int" rate="1" target="vad_VADFilesink1"
+              target_port="iport1"
+              output_count="1"/>
+      <input name="iport1" type="short int" rate="1" source="vad_VADdecision1"
+             source_port="oport1"
+             input_count="1"/>
+   </node>
+   <node name="vad_VADFilesink1" moc="sdf" kind="file_sink" function="VADFilesink_func"
+         init_val=""
+         take=""
+         n="">
+      <input name="iport1" type="short int" rate="" source="vad_VADhangover1"
+             source_port="oport1"
+             input_count="1"/>
+   </node>
+</graph>

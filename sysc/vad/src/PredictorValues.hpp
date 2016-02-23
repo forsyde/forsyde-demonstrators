@@ -15,7 +15,7 @@
 #define PREDICTORVALUES_HPP
 
 #include <forsyde.hpp>
-#include <includes/vad.h>
+#include <src/includes/vad.h>
 
 using namespace ForSyDe::SDF;
 

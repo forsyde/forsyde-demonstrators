@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf3 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="sdf" version="1.0"
+      xsi:noNamespaceSchemaLocation="http://www.es.ele.tue.nl/sdf3/xsd/sdf3-sdf.xsd">
+   <applicationGraph name="vad">
+      <sdf name="vad" type="g">
+         <actor name="vad_VADFilesource1" type="a">
+            <port name="oport1_1" type="out" rate=""/>
+            <port name="oport1_2" type="out" rate=""/>
+            <port name="oport1_3" type="out" rate=""/>
+            <port name="oport1_4" type="out" rate=""/>
+            <port name="oport1_5" type="out" rate=""/>
+            <port name="oport1_6" type="out" rate=""/>
+            <port name="oport1_7" type="out" rate=""/>
+         </actor>
+         <actor name="vad_ToneDetection1" type="a">
+            <port name="iport1_1" type="in" rate="1"/>
+            <port name="oport1_1" type="out" rate="1"/>
+         </actor>
+         <actor name="vad_EnergyComputation1" type="a">
+            <port name="iport2_1" type="in" rate="1"/>
+            <port name="iport3_1" type="in" rate="1"/>
+            <port name="iport1_1" type="in" rate="1"/>
+            <port name="oport1_1" type="out" rate="1"/>
+            <port name="oport1_2" type="out" rate="1"/>
+         </actor>
+         <actor name="vad_ACFAveraging1" type="a">
+            <port name="iport1_1" type="in" rate="1"/>
+            <port name="iport2_1" type="in" rate="1"/>
+            <port name="iport3_1" type="in" rate="1"/>
+            <port name="oport1_1" type="out" rate="1"/>
+            <port name="oport1_2" type="out" rate="1"/>
+         </actor>
+         <actor name="vad_PredictorValues1" type="a">
+            <port name="iport1_1" type="in" rate="1"/>
+            <port name="oport1_1_0" type="out" rate="1"/>
+            <port name="oport1_1_1" type="out" rate="1"/>
+         </actor>
+         <actor name="vad_SpectralComparison1" type="a">
+            <port name="iport1_1" type="in" rate="1"/>
+            <port name="iport2_1" type="in" rate="1"/>
+            <port name="oport1_1" type="out" rate="1"/>
+         </actor>
+         <actor name="vad_ThresholdAdaptation1" type="a">
+            <port name="iport1_5" type="in" rate="1"/>
+            <port name="iport1_4" type="in" rate="1"/>
+            <port name="iport1_3" type="in" rate="1"/>
+            <port name="iport1_1" type="in" rate="1"/>
+            <port name="iport1_2" type="in" rate="1"/>
+            <port name="oport1_1" type="out" rate="1"/>
+            <port name="oport1_2" type="out" rate="1"/>
+         </actor>
+         <actor name="vad_VADdecision1" type="a">
+            <port name="iport1_1" type="in" rate="1"/>
+            <port name="iport2_1" type="in" rate="1"/>
+            <port name="oport1_1" type="out" rate="1"/>
+         </actor>
+         <actor name="vad_VADhangover1" type="a">
+            <port name="iport1_1" type="in" rate="1"/>
+            <port name="oport1_1" type="out" rate="1"/>
+         </actor>
+         <actor name="vad_VADFilesink1" type="a">
+            <port name="iport1_1" type="in" rate=""/>
+         </actor>
+         <channel name="vad_VADFilesource1_oport1_1_vad_ACFAveraging1_iport1_1"
+                  srcActor="vad_VADFilesource1"
+                  srcPort="oport1_1"
+                  dstActor="vad_ACFAveraging1"
+                  dstPort="iport1_1"
+                  initialTokens="0"/>
+         <channel name="vad_VADFilesource1_oport1_2_vad_EnergyComputation1_iport2_1"
+                  srcActor="vad_VADFilesource1"
+                  srcPort="oport1_2"
+                  dstActor="vad_EnergyComputation1"
+                  dstPort="iport2_1"
+                  initialTokens="0"/>
+         <channel name="vad_VADFilesource1_oport1_3_vad_ACFAveraging1_iport2_1"
+                  srcActor="vad_VADFilesource1"
+                  srcPort="oport1_3"
+                  dstActor="vad_ACFAveraging1"
+                  dstPort="iport2_1"
+                  initialTokens="0"/>
+         <channel name="vad_VADFilesource1_oport1_4_vad_ACFAveraging1_iport3_1"
+                  srcActor="vad_VADFilesource1"
+                  srcPort="oport1_4"
+                  dstActor="vad_ACFAveraging1"
+                  dstPort="iport3_1"
+                  initialTokens="0"/>
+         <channel name="vad_VADFilesource1_oport1_5_vad_EnergyComputation1_iport3_1"
+                  srcActor="vad_VADFilesource1"
+                  srcPort="oport1_5"
+                  dstActor="vad_EnergyComputation1"
+                  dstPort="iport3_1"
+                  initialTokens="0"/>
+         <channel name="vad_VADFilesource1_oport1_6_vad_ToneDetection1_iport1_1"
+                  srcActor="vad_VADFilesource1"
+                  srcPort="oport1_6"
+                  dstActor="vad_ToneDetection1"
+                  dstPort="iport1_1"
+                  initialTokens="0"/>
+         <channel name="vad_VADFilesource1_oport1_7_vad_ThresholdAdaptation1_iport1_5"
+                  srcActor="vad_VADFilesource1"
+                  srcPort="oport1_7"
+                  dstActor="vad_ThresholdAdaptation1"
+                  dstPort="iport1_5"
+                  initialTokens="0"/>
+         <channel name="vad_ToneDetection1_oport1_1_vad_ThresholdAdaptation1_iport1_4"
+                  srcActor="vad_ToneDetection1"
+                  srcPort="oport1_1"
+                  dstActor="vad_ThresholdAdaptation1"
+                  dstPort="iport1_4"
+                  initialTokens="0"/>
+         <channel name="vad_EnergyComputation1_oport1_1_vad_ThresholdAdaptation1_iport1_3"
+                  srcActor="vad_EnergyComputation1"
+                  srcPort="oport1_1"
+                  dstActor="vad_ThresholdAdaptation1"
+                  dstPort="iport1_3"
+                  initialTokens="0"/>
+         <channel name="vad_EnergyComputation1_oport1_2_vad_VADdecision1_iport1_1"
+                  srcActor="vad_EnergyComputation1"
+                  srcPort="oport1_2"
+                  dstActor="vad_VADdecision1"
+                  dstPort="iport1_1"
+                  initialTokens="0"/>
+         <channel name="vad_ACFAveraging1_oport1_1_vad_SpectralComparison1_iport1_1"
+                  srcActor="vad_ACFAveraging1"
+                  srcPort="oport1_1"
+                  dstActor="vad_SpectralComparison1"
+                  dstPort="iport1_1"
+                  initialTokens="0"/>
+         <channel name="vad_ACFAveraging1_oport1_2_vad_PredictorValues1_iport1_1"
+                  srcActor="vad_ACFAveraging1"
+                  srcPort="oport1_2"
+                  dstActor="vad_PredictorValues1"
+                  dstPort="iport1_1"
+                  initialTokens="0"/>
+         <channel name="vad_PredictorValues1_oport1_1_vad_SpectralComparison1_iport2_1"
+                  srcActor="vad_PredictorValues1"
+                  srcPort="oport1_1_0"
+                  dstActor="vad_SpectralComparison1"
+                  dstPort="iport2_1"
+                  initialTokens="0"/>
+         <channel name="vad_PredictorValues1_oport1_1_vad_ThresholdAdaptation1_iport1_1"
+                  srcActor="vad_PredictorValues1"
+                  srcPort="oport1_1_1"
+                  dstActor="vad_ThresholdAdaptation1"
+                  dstPort="iport1_1"
+                  initialTokens="0"/>
+         <channel name="vad_SpectralComparison1_oport1_1_vad_ThresholdAdaptation1_iport1_2"
+                  srcActor="vad_SpectralComparison1"
+                  srcPort="oport1_1"
+                  dstActor="vad_ThresholdAdaptation1"
+                  dstPort="iport1_2"
+                  initialTokens="0"/>
+         <channel name="vad_ThresholdAdaptation1_oport1_1_vad_EnergyComputation1_iport1_1"
+                  srcActor="vad_ThresholdAdaptation1"
+                  srcPort="oport1_1"
+                  dstActor="vad_EnergyComputation1"
+                  dstPort="iport1_1"
+                  initialTokens="0"/>
+         <channel name="vad_ThresholdAdaptation1_oport1_2_vad_VADdecision1_iport2_1"
+                  srcActor="vad_ThresholdAdaptation1"
+                  srcPort="oport1_2"
+                  dstActor="vad_VADdecision1"
+                  dstPort="iport2_1"
+                  initialTokens="0"/>
+         <channel name="vad_VADdecision1_oport1_1_vad_VADhangover1_iport1_1"
+                  srcActor="vad_VADdecision1"
+                  srcPort="oport1_1"
+                  dstActor="vad_VADhangover1"
+                  dstPort="iport1_1"
+                  initialTokens="0"/>
+         <channel name="vad_VADhangover1_oport1_1_vad_VADFilesink1_iport1_1"
+                  srcActor="vad_VADhangover1"
+                  srcPort="oport1_1"
+                  dstActor="vad_VADFilesink1"
+                  dstPort="iport1_1"
+                  initialTokens="0"/>
+      </sdf>
+      <sdfProperties>
+         <actorProperties actor="vad_VADFilesource1">
+            <processor type="microblaze0" default="true">
+               <executionTime time="1000"/>
+               <memory>
+                  <stateSize max="1000"/>
+               </memory>
+            </processor>
+         </actorProperties>
+         <actorProperties actor="vad_ToneDetection1">
+            <processor type="microblaze0" default="true">
+               <executionTime time="1000"/>
+               <memory>
+                  <stateSize max="1000"/>
+               </memory>
+            </processor>
+         </actorProperties>
+         <actorProperties actor="vad_EnergyComputation1">
+            <processor type="microblaze0" default="true">
+               <executionTime time="1000"/>
+               <memory>
+                  <stateSize max="1000"/>
+               </memory>
+            </processor>
+         </actorProperties>
+         <actorProperties actor="vad_ACFAveraging1">
+            <processor type="microblaze0" default="true">
+               <executionTime time="1000"/>
+               <memory>
+                  <stateSize max="1000"/>
+               </memory>
+            </processor>
+         </actorProperties>
+         <actorProperties actor="vad_PredictorValues1">
+            <processor type="microblaze0" default="true">
+               <executionTime time="1000"/>
+               <memory>
+                  <stateSize max="1000"/>
+               </memory>
+            </processor>
+         </actorProperties>
+         <actorProperties actor="vad_SpectralComparison1">
+            <processor type="microblaze0" default="true">
+               <executionTime time="1000"/>
+               <memory>
+                  <stateSize max="1000"/>
+               </memory>
+            </processor>
+         </actorProperties>
+         <actorProperties actor="vad_ThresholdAdaptation1">
+            <processor type="microblaze0" default="true">
+               <executionTime time="1000"/>
+               <memory>
+                  <stateSize max="1000"/>
+               </memory>
+            </processor>
+         </actorProperties>
+         <actorProperties actor="vad_VADdecision1">
+            <processor type="microblaze0" default="true">
+               <executionTime time="1000"/>
+               <memory>
+                  <stateSize max="1000"/>
+               </memory>
+            </processor>
+         </actorProperties>
+         <actorProperties actor="vad_VADhangover1">
+            <processor type="microblaze0" default="true">
+               <executionTime time="1000"/>
+               <memory>
+                  <stateSize max="1000"/>
+               </memory>
+            </processor>
+         </actorProperties>
+         <actorProperties actor="vad_VADFilesink1">
+            <processor type="microblaze0" default="true">
+               <executionTime time="1000"/>
+               <memory>
+                  <stateSize max="1000"/>
+               </memory>
+            </processor>
+         </actorProperties>
+         <channelProperties channel="vad_VADFilesource1_oport1_1_vad_ACFAveraging1_iport1_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_VADFilesource1_oport1_2_vad_EnergyComputation1_iport2_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_VADFilesource1_oport1_3_vad_ACFAveraging1_iport2_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_VADFilesource1_oport1_4_vad_ACFAveraging1_iport3_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_VADFilesource1_oport1_5_vad_EnergyComputation1_iport3_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_VADFilesource1_oport1_6_vad_ToneDetection1_iport1_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_VADFilesource1_oport1_7_vad_ThresholdAdaptation1_iport1_5">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_ToneDetection1_oport1_1_vad_ThresholdAdaptation1_iport1_4">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_EnergyComputation1_oport1_1_vad_ThresholdAdaptation1_iport1_3">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_EnergyComputation1_oport1_2_vad_VADdecision1_iport1_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_ACFAveraging1_oport1_1_vad_SpectralComparison1_iport1_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_ACFAveraging1_oport1_2_vad_PredictorValues1_iport1_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_PredictorValues1_oport1_1_vad_SpectralComparison1_iport2_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_PredictorValues1_oport1_1_vad_ThresholdAdaptation1_iport1_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_SpectralComparison1_oport1_1_vad_ThresholdAdaptation1_iport1_2">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_ThresholdAdaptation1_oport1_1_vad_EnergyComputation1_iport1_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_ThresholdAdaptation1_oport1_2_vad_VADdecision1_iport2_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_VADdecision1_oport1_1_vad_VADhangover1_iport1_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+         <channelProperties channel="vad_VADhangover1_oport1_1_vad_VADFilesink1_iport1_1">
+            <tokenSize sz="32"/>
+         </channelProperties>
+      </sdfProperties>
+   </applicationGraph>
+</sdf3>

@@ -31,7 +31,7 @@
 		<port name="oport1" type="r_t.r_t.r_t.short.short.rc_t.short" direction="out"/>
 		<process_constructor name="file_source" moc="sdf">
 			<argument name="_func" value="VADFilesource_func"/>
-			<argument name="file_name" value="source_data.txt"/>
+			<argument name="file_name" value="files/source_data.txt"/>
 		</process_constructor>
 	</leaf_process>
 	<leaf_process name="VADFilesource1_unzip">
@@ -180,7 +180,7 @@
 		<port name="iport1" type="short int" direction="in"/>
 		<process_constructor name="file_sink" moc="sdf">
 			<argument name="_func" value="VADFilesink_func"/>
-			<argument name="file_name" value="sink_data.txt"/>
+			<argument name="file_name" value="files/sink_data.txt"/>
 		</process_constructor>
 	</leaf_process>
 </process_network>

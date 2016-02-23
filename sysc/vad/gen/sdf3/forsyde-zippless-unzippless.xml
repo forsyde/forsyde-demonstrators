@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graph name="vad">
+   <connection from="vad_VADFilesource1" output="oport1" rate="" output_count="7">
+      <virtual_link count="1">
+         <actor name="vad_ACFAveraging1" count="1" input="iport1" rate="1" input_count="1"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_VADFilesource1" output="oport1" rate="" output_count="7">
+      <virtual_link count="2">
+         <actor name="vad_EnergyComputation1" count="1" input="iport2" rate="1" input_count="1"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_VADFilesource1" output="oport1" rate="" output_count="7">
+      <virtual_link count="3">
+         <actor name="vad_ACFAveraging1" count="1" input="iport2" rate="1" input_count="1"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_VADFilesource1" output="oport1" rate="" output_count="7">
+      <virtual_link count="4">
+         <actor name="vad_ACFAveraging1" count="1" input="iport3" rate="1" input_count="1"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_VADFilesource1" output="oport1" rate="" output_count="7">
+      <virtual_link count="5">
+         <actor name="vad_EnergyComputation1" count="1" input="iport3" rate="1" input_count="1"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_VADFilesource1" output="oport1" rate="" output_count="7">
+      <virtual_link count="6">
+         <actor name="vad_ToneDetection1" count="1" input="iport1" rate="1" input_count="1"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_VADFilesource1" output="oport1" rate="" output_count="7">
+      <virtual_link count="7">
+         <actor name="vad_ThresholdAdaptation1" count="5" input="iport1" rate="1"
+                input_count="5"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_ToneDetection1" output="oport1" rate="1" output_count="1">
+      <virtual_link count="1">
+         <actor name="vad_ThresholdAdaptation1" count="4" input="iport1" rate="1"
+                input_count="5"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_EnergyComputation1" output="oport1" rate="1" output_count="2">
+      <virtual_link count="1">
+         <actor name="vad_ThresholdAdaptation1" count="3" input="iport1" rate="1"
+                input_count="5"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_EnergyComputation1" output="oport1" rate="1" output_count="2">
+      <virtual_link count="2">
+         <actor name="vad_VADdecision1" count="1" input="iport1" rate="1" input_count="1"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_ACFAveraging1" output="oport1" rate="1" output_count="2">
+      <virtual_link count="1">
+         <actor name="vad_SpectralComparison1" count="1" input="iport1" rate="1"
+                input_count="1"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_ACFAveraging1" output="oport1" rate="1" output_count="2">
+      <virtual_link count="2">
+         <actor name="vad_PredictorValues1" count="1" input="iport1" rate="1" input_count="1"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_PredictorValues1" output="oport1" rate="1" output_count="1">
+      <virtual_link count="1">
+         <fanout node_name="vad_PredictorValues1" port="oport1" explicit="false" way="0"/>
+         <actor name="vad_SpectralComparison1" count="1" input="iport2" rate="1"
+                input_count="1"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_PredictorValues1" output="oport1" rate="1" output_count="1">
+      <virtual_link count="1">
+         <fanout node_name="vad_PredictorValues1" port="oport1" explicit="false" way="1"/>
+         <actor name="vad_ThresholdAdaptation1" count="1" input="iport1" rate="1"
+                input_count="5"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_SpectralComparison1" output="oport1" rate="1" output_count="1">
+      <virtual_link count="1">
+         <actor name="vad_ThresholdAdaptation1" count="2" input="iport1" rate="1"
+                input_count="5"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_ThresholdAdaptation1" output="oport1" rate="1" output_count="2">
+      <virtual_link count="1">
+         <delay node_name="vad_e7_init" n="1" count="1" input_count="1"
+                init_val="([24576, 0, 0, 0, 0, 0, 0, 0, 0], 7)"/>
+         <actor name="vad_EnergyComputation1" count="1" input="iport1" rate="1" input_count="1"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_ThresholdAdaptation1" output="oport1" rate="1" output_count="2">
+      <virtual_link count="2">
+         <actor name="vad_VADdecision1" count="1" input="iport2" rate="1" input_count="1"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_VADdecision1" output="oport1" rate="1" output_count="1">
+      <virtual_link count="1">
+         <actor name="vad_VADhangover1" count="1" input="iport1" rate="1" input_count="1"/>
+      </virtual_link>
+   </connection>
+   <connection from="vad_VADhangover1" output="oport1" rate="1" output_count="1">
+      <virtual_link count="1">
+         <actor name="vad_VADFilesink1" count="1" input="iport1" rate="" input_count="1"/>
+      </virtual_link>
+   </connection>
+</graph>
