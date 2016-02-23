@@ -4,3 +4,7 @@
 *f2dot.conf
 *f2dot
 *Makefile.defs
+*.conf
+*.dtd
+*.log
+*.jpg
