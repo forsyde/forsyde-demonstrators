@@ -1,13 +1,13 @@
 
-EXTRACFLAGS = 
+EXTRACFLAGS = -Wno-unknown-pragmas
 EXTRA_LIBS =
 
 MODULE = run
 SRCS = $(wildcard *.cpp)
 
-OBJS = $(SRCS:.cpp=.o)
+OBJS = obj/$(SRCS:.cpp=.o)
 
-include ../Makefile.defs
+include $(FORSYDE_MAKEDEFS)
 
 CFLAGS += -DFORSYDE_INTROSPECTION
 

@@ -96,7 +96,8 @@ SC_MODULE(top)
 #ifdef FORSYDE_INTROSPECTION
     void start_of_simulation()
     {
-        ForSyDe::XMLExport dumper("gen/");
+      system("mkdir -p ir");
+        ForSyDe::XMLExport dumper("ir/");
         dumper.traverse(this);
     }
 #endif

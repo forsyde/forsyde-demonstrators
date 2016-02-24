@@ -16,10 +16,10 @@ strict digraph {
 			lwidth=0.26,
 			style="filled, rounded"
 		];
-		subgraph "cluster_top.xmloutps" {
+		subgraph "cluster_top.xmlinps" {
 			graph [label=""];
 		}
-		subgraph "cluster_top.xmlinps" {
+		subgraph "cluster_top.xmloutps" {
 			graph [label=""];
 		}
 		dummy		 [height=0.5,
@@ -53,35 +53,6 @@ strict digraph {
 			width=1.9514];
 		"top@VADFilesource1":oport1:s -> "top@VADFilesource1_unzip":iport1:n		 [penwidth=1,
 			pos="e,142,1576 142,1612 142,1600 142,1594.8 142,1586.1"];
-		"top@ACFAveraging1"		 [color=black,
-			fillcolor="#FCD975",
-			fontname=Helvetica,
-			fontsize=12,
-			height=1.0694,
-			label="{ {<iport1>|<iport2>|<iport3> } | { ACFAveraging1&#92;ncomb3&#92;n } | { <oport1>} }",
-			orientation=90,
-			pos="111,1423",
-			rects="59.5,1440,93.5,1461 93.5,1440,127.5,1461 127.5,1440,162.5,1461 59.5,1406,162.5,1440 59.5,1385,162.5,1406",
-			shape=record,
-			style="rounded,filled",
-			width=1.4236];
-		"top@VADFilesource1_unzip":port_4:s -> "top@ACFAveraging1":iport2:n		 [penwidth=1,
-			pos="e,110,1462 121,1498 121,1485.3 114.68,1480.8 111.62,1472.1"];
-		"top@ThresholdAdaptation1_zip"		 [color=black,
-			fillcolor="#FCD975",
-			fontname=Helvetica,
-			fontsize=12,
-			height=1.0694,
-			label="{ {<port_4>|<port_3>|<port_2>|<port_1>|<port_0> } | { ThresholdAdaptation1_zip&#92;nzipN&#92;n } | { <oport1>} }",
-			orientation=90,
-			pos="156,967",
-			rects="77,984,108,1005 108,984,140,1005 140,984,171,1005 171,984,203,1005 203,984,235,1005 77,950,235,984 77,929,235,950",
-			shape=record,
-			style="rounded,filled",
-			width=2.1806];
-		"top@VADFilesource1_unzip":port_0:s -> "top@ThresholdAdaptation1_zip":port_0:n		 [penwidth=1,
-			pos="e,219,1006 202,1498 202,1477.8 295.42,1366.2 304,1348 311.48,1332.1 315,1327.6 315,1310 315,1310 315,1310 315,1194 315,1103.7 225.99,\
-1100 219.39,1016.1"];
 		"top@ToneDetection1"		 [color=black,
 			fillcolor="#FCD975",
 			fontname=Helvetica,
@@ -111,6 +82,51 @@ strict digraph {
 		"top@VADFilesource1_unzip":port_5:s -> "top@EnergyComputation1":iport2:n		 [penwidth=1,
 			pos="e,119,550 101,1498 101,1470.3 65.32,1485.1 50,1462 11.829,1404.4 17,1379.1 17,1310 17,1310 17,1310 17,852 17,781.67 19.436,756.73 \
 61,700 78.047,676.73 100.95,689.19 115,664 137.97,622.84 121.69,603.5 119.28,560.24"];
+		"top@ACFAveraging1"		 [color=black,
+			fillcolor="#FCD975",
+			fontname=Helvetica,
+			fontsize=12,
+			height=1.0694,
+			label="{ {<iport1>|<iport2>|<iport3> } | { ACFAveraging1&#92;ncomb3&#92;n } | { <oport1>} }",
+			orientation=90,
+			pos="111,1423",
+			rects="59.5,1440,93.5,1461 93.5,1440,127.5,1461 127.5,1440,162.5,1461 59.5,1406,162.5,1440 59.5,1385,162.5,1406",
+			shape=record,
+			style="rounded,filled",
+			width=1.4236];
+		"top@VADFilesource1_unzip":port_4:s -> "top@ACFAveraging1":iport2:n		 [penwidth=1,
+			pos="e,110,1462 121,1498 121,1485.3 114.68,1480.8 111.62,1472.1"];
+		"top@ThresholdAdaptation1_zip"		 [color=black,
+			fillcolor="#FCD975",
+			fontname=Helvetica,
+			fontsize=12,
+			height=1.0694,
+			label="{ {<port_4>|<port_3>|<port_2>|<port_1>|<port_0> } | { ThresholdAdaptation1_zip&#92;nzipN&#92;n } | { <oport1>} }",
+			orientation=90,
+			pos="156,967",
+			rects="77,984,108,1005 108,984,140,1005 140,984,171,1005 171,984,203,1005 203,984,235,1005 77,950,235,984 77,929,235,950",
+			shape=record,
+			style="rounded,filled",
+			width=2.1806];
+		"top@VADFilesource1_unzip":port_0:s -> "top@ThresholdAdaptation1_zip":port_0:n		 [penwidth=1,
+			pos="e,219,1006 202,1498 202,1477.8 295.42,1366.2 304,1348 311.48,1332.1 315,1327.6 315,1310 315,1310 315,1310 315,1194 315,1103.7 225.99,\
+1100 219.39,1016.1"];
+		"top@ToneDetection1":oport1:s -> "top@ThresholdAdaptation1_zip":port_1:n		 [penwidth=1,
+			pos="e,187,1006 245,1270 245,1166.6 225.62,1141.9 199,1042 195.71,1029.7 190.51,1025 188.19,1016.2"];
+		"top@EnergyComputation1_unzip"		 [color=black,
+			fillcolor="#FCD975",
+			fontname=Helvetica,
+			fontsize=12,
+			height=1.0694,
+			label="{ {<iport1> } | { EnergyComputation1_unzip&#92;nunzip&#92;n } | { <oport1>|<oport2>} }",
+			orientation=90,
+			pos="102,397",
+			rects="19,414,185,435 19,380,185,414 19,359,102,380 102,359,185,380",
+			shape=record,
+			style="rounded,filled",
+			width=2.3056];
+		"top@EnergyComputation1":oport1:s -> "top@EnergyComputation1_unzip":iport1:n		 [penwidth=1,
+			pos="e,102,436 120,472 120,458.16 109.23,454.9 104.35,445.85"];
 		"top@ACFAveraging1_unzip"		 [color=black,
 			fillcolor="#FCD975",
 			fontname=Helvetica,
@@ -139,22 +155,6 @@ strict digraph {
 			width=1.8681];
 		"top@ThresholdAdaptation1_zip":oport1:s -> "top@ThresholdAdaptation1":iport1:n		 [penwidth=1,
 			pos="e,156,892 156,928 156,916 156,910.75 156,902.12"];
-		"top@ToneDetection1":oport1:s -> "top@ThresholdAdaptation1_zip":port_1:n		 [penwidth=1,
-			pos="e,187,1006 245,1270 245,1166.6 225.62,1141.9 199,1042 195.71,1029.7 190.51,1025 188.19,1016.2"];
-		"top@EnergyComputation1_unzip"		 [color=black,
-			fillcolor="#FCD975",
-			fontname=Helvetica,
-			fontsize=12,
-			height=1.0694,
-			label="{ {<iport1> } | { EnergyComputation1_unzip&#92;nunzip&#92;n } | { <oport1>|<oport2>} }",
-			orientation=90,
-			pos="102,397",
-			rects="19,414,185,435 19,380,185,414 19,359,102,380 102,359,185,380",
-			shape=record,
-			style="rounded,filled",
-			width=2.3056];
-		"top@EnergyComputation1":oport1:s -> "top@EnergyComputation1_unzip":iport1:n		 [penwidth=1,
-			pos="e,102,436 120,472 120,458.16 109.23,454.9 104.35,445.85"];
 		"top@EnergyComputation1_unzip":oport1:s -> "top@ThresholdAdaptation1_zip":port_2:n		 [penwidth=1,
 			pos="e,155,1006 60,358 60,339.77 31.731,345.95 19,359 -4.9019,383.49 17.263,401.82 19,436 25.453,562.94 -16.772,919.2 77,1005 87.291,\
 1014.4 131.53,1020.6 148.41,1013.6"];
@@ -186,20 +186,6 @@ strict digraph {
 			width=1.3681];
 		"top@VADdecision1":oport1:s -> "top@VADhangover1":iport1:n		 [penwidth=1,
 			pos="e,174,208 174,244 174,232 174,226.75 174,218.12"];
-		"top@SpectralComparison1"		 [color=black,
-			fillcolor="#FCD975",
-			fontname=Helvetica,
-			fontsize=12,
-			height=1.0694,
-			label="{ {<iport1>|<iport2> } | { SpectralComparison1&#92;ncomb2&#92;n } | { <oport1>} }",
-			orientation=90,
-			pos="124,1081",
-			rects="57.5,1098,123.5,1119 123.5,1098,190.5,1119 57.5,1064,190.5,1098 57.5,1043,190.5,1064",
-			shape=record,
-			style="rounded,filled",
-			width=1.8403];
-		"top@ACFAveraging1_unzip":oport1:s -> "top@SpectralComparison1":iport1:n		 [penwidth=1,
-			pos="e,90,1120 71,1270 71,1219.1 72.584,1206.2 81,1156 83.068,1143.7 87.17,1138.8 89.036,1130"];
 		"top@PredictorValues1"		 [color=black,
 			fillcolor="#FCD975",
 			fontname=Helvetica,
@@ -214,12 +200,26 @@ strict digraph {
 			width=1.5069];
 		"top@ACFAveraging1_unzip":oport2:s -> "top@PredictorValues1":iport1:n		 [penwidth=1,
 			pos="e,145,1234 141,1270 141,1257.9 143.25,1252.8 144.38,1244.2"];
-		"top@SpectralComparison1":oport1:s -> "top@ThresholdAdaptation1_zip":port_3:n		 [penwidth=1,
-			pos="e,124,1006 124,1042 124,1030 124,1024.8 124,1016.1"];
+		"top@SpectralComparison1"		 [color=black,
+			fillcolor="#FCD975",
+			fontname=Helvetica,
+			fontsize=12,
+			height=1.0694,
+			label="{ {<iport1>|<iport2> } | { SpectralComparison1&#92;ncomb2&#92;n } | { <oport1>} }",
+			orientation=90,
+			pos="124,1081",
+			rects="57.5,1098,123.5,1119 123.5,1098,190.5,1119 57.5,1064,190.5,1098 57.5,1043,190.5,1064",
+			shape=record,
+			style="rounded,filled",
+			width=1.8403];
+		"top@ACFAveraging1_unzip":oport1:s -> "top@SpectralComparison1":iport1:n		 [penwidth=1,
+			pos="e,90,1120 71,1270 71,1219.1 72.584,1206.2 81,1156 83.068,1143.7 87.17,1138.8 89.036,1130"];
 		"top@PredictorValues1":oport1:s -> "top@ThresholdAdaptation1_zip":port_4:n		 [penwidth=1,
 			pos="e,92,1006 145,1156 145,1110 74.257,1157.8 48,1120 28.206,1091.5 33.155,1073.3 48,1042 57.045,1022.9 81.715,1028.2 89.566,1015.7"];
 		"top@PredictorValues1":oport1:s -> "top@SpectralComparison1":iport2:n		 [penwidth=1,
 			pos="e,157,1120 145,1156 145,1143.2 151.89,1138.8 155.23,1130.1"];
+		"top@SpectralComparison1":oport1:s -> "top@ThresholdAdaptation1_zip":port_3:n		 [penwidth=1,
+			pos="e,124,1006 124,1042 124,1030 124,1024.8 124,1016.1"];
 		"top@ThresholdAdaptation1_unzip"		 [color=black,
 			fillcolor="#FCD975",
 			fontname=Helvetica,
