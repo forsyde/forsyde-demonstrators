@@ -4,5 +4,11 @@
 *.dtd
 *.log
 *.jpg
-*ir
-*sdf3
+*
+!*/
+!.gitignore
+!*.conf
+!*/files/
+!*/src/
+!*Makefile
+!*.cpp
