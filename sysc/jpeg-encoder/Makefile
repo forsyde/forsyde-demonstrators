@@ -3,9 +3,7 @@ EXTRACFLAGS = -Wno-unknown-pragmas
 EXTRA_LIBS =
 
 MODULE = run
-SRCS = $(wildcard *.cpp)
-
-OBJS = obj/$(SRCS:.cpp=.o)
+SRCS = $(wildcard src/*.cpp)
 
 include $(FORSYDE_MAKEDEFS)
 

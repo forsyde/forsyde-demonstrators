@@ -10,7 +10,7 @@
     * License: BSD3                                                   *
     *******************************************************************/
 
-#include "src/top.hpp"
+#include "top.hpp"
 
 int sc_main(int argc, char **argv)
 {

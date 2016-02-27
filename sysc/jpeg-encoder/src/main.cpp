@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <cstring>
 
-#include "src/top.hpp"
+#include "top.hpp"
 
 int sc_main(int argc, char** argv)
 {
