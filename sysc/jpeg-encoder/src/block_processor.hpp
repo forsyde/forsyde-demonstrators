@@ -212,7 +212,7 @@ void huffman_encode_func(std::vector<huffman_encoding_output> &out, const std::v
 	out[0] = huffman_step_output;
 }
 
-void concatenate_huffman_steps_func(std::vector<encoded_block> &out, const std::vector<concatenate_smaller_blocks_input_type> &inp1)
+void concatenate_steps_func(std::vector<encoded_block> &out, const std::vector<concatenate_smaller_blocks_input_type> &inp1)
 {
 	encoded_block output_block;
 
@@ -222,7 +222,7 @@ void concatenate_huffman_steps_func(std::vector<encoded_block> &out, const std::
 	concatenate_smaller_blocks_input_type incoming_tuple = inp1[0];
 	huffman_encoding_output huffman_out;
 
-#pragma ForSyDe begin concatenate_huffman_steps_func
+#pragma ForSyDe begin concatenate_steps_func
 	// collect all six huffman steps and concatenate them to a complete block output
 	// Y[0][0]
 	huffman_out = (std::get < 0 > (incoming_tuple))[0];
@@ -286,7 +286,7 @@ public:
 
 	SC_CTOR(block_processor)
 	{
-		make_comb("color_conversion_comb", color_conversion_func, 1, 1, color_conversion_output, incoming_bitmap_block);
+		make_comb("color_conversion", color_conversion_func, 1, 1, color_conversion_output, incoming_bitmap_block);
 
 		std::vector<unsigned int> unzip_blocks_rates =
 		{ 1, 1, 1, 1, 1, 1 };
@@ -300,19 +300,19 @@ public:
 		std::get < 4 > (unzip_blocks->oport)(cc_to_dct_5);
 		std::get < 5 > (unzip_blocks->oport)(cc_to_dct_6);
 
-		make_comb("dct_cr", dct_func, 1, 1, dct_to_huffman_1, cc_to_dct_1);
-		make_comb("dct_cb", dct_func, 1, 1, dct_to_huffman_2, cc_to_dct_2);
-		make_comb("dct_y00", dct_func, 1, 1, dct_to_huffman_3, cc_to_dct_3);
-		make_comb("dct_y01", dct_func, 1, 1, dct_to_huffman_4, cc_to_dct_4);
-		make_comb("dct_y10", dct_func, 1, 1, dct_to_huffman_5, cc_to_dct_5);
-		make_comb("dct_y11", dct_func, 1, 1, dct_to_huffman_6, cc_to_dct_6);
+		make_comb("dct0", dct_func, 1, 1, dct_to_huffman_1, cc_to_dct_1);
+		make_comb("dct1", dct_func, 1, 1, dct_to_huffman_2, cc_to_dct_2);
+		make_comb("dct00", dct_func, 1, 1, dct_to_huffman_3, cc_to_dct_3);
+		make_comb("dct01", dct_func, 1, 1, dct_to_huffman_4, cc_to_dct_4);
+		make_comb("dct10", dct_func, 1, 1, dct_to_huffman_5, cc_to_dct_5);
+		make_comb("dct11", dct_func, 1, 1, dct_to_huffman_6, cc_to_dct_6);
 
-		make_comb("huffman_cr", huffman_encode_func, 1, 1, huffman_to_conc_1, dct_to_huffman_1);
-		make_comb("huffman_cb", huffman_encode_func, 1, 1, huffman_to_conc_2, dct_to_huffman_2);
-		make_comb("huffman_y00", huffman_encode_func, 1, 1, huffman_to_conc_3, dct_to_huffman_3);
-		make_comb("huffman_y01", huffman_encode_func, 1, 1, huffman_to_conc_4, dct_to_huffman_4);
-		make_comb("huffman_y10", huffman_encode_func, 1, 1, huffman_to_conc_5, dct_to_huffman_5);
-		make_comb("huffman_y11", huffman_encode_func, 1, 1, huffman_to_conc_6, dct_to_huffman_6);
+		make_comb("huffman_encode0",  huffman_encode_func, 1, 1, huffman_to_conc_1, dct_to_huffman_1);
+		make_comb("huffman_encode1",  huffman_encode_func, 1, 1, huffman_to_conc_2, dct_to_huffman_2);
+		make_comb("huffman_encode00", huffman_encode_func, 1, 1, huffman_to_conc_3, dct_to_huffman_3);
+		make_comb("huffman_encode01", huffman_encode_func, 1, 1, huffman_to_conc_4, dct_to_huffman_4);
+		make_comb("huffman_encode10", huffman_encode_func, 1, 1, huffman_to_conc_5, dct_to_huffman_5);
+		make_comb("huffman_encode11", huffman_encode_func, 1, 1, huffman_to_conc_6, dct_to_huffman_6);
 
 		std::vector<unsigned> zip_blocks_rates =
 		{ 1, 1, 1, 1, 1, 1 };
@@ -326,7 +326,7 @@ public:
 		std::get < 5 > (zip_blocks->iport)(huffman_to_conc_6);
 		zip_blocks->oport1(concatenated_block);
 
-		make_comb("concatenate_steps", concatenate_huffman_steps_func, 1, 1, outgoing_encoded_block, concatenated_block);
+		make_comb("concatenate_steps", concatenate_steps_func, 1, 1, outgoing_encoded_block, concatenated_block);
 	}
 
 };

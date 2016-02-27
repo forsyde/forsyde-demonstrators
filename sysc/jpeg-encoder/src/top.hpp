@@ -153,7 +153,7 @@ public:
 				bitmap_reader_initial_state, // Initial state
 				bitmap_reader_next_state, bitmap_reader_to_delay);
 
-		ForSyDe::SDF::make_comb("read_bitmap_comb", // Name
+		ForSyDe::SDF::make_comb("read_bitmap", // Name
 				read_bitmap_func, // Function to invoke
 				1, // Production rate
 				1, // Consumption rate
@@ -164,7 +164,7 @@ public:
 		auto bitmap_reader_fanout = ForSyDe::SDF::make_fanout("bitmap_reader_fanout", bitmap_reader_to_delay, bitmap_reader_output_to_fanout);
 		bitmap_reader_fanout->oport1(bitmap_reader_to_processing);
 
-		ForSyDe::SDF::make_comb("rgb_block_collector_comb", rgb_block_collector_func, 1, 4, rgb_collector_output, bitmap_reader_to_processing);
+		ForSyDe::SDF::make_comb("rgb_block_collector", rgb_block_collector_func, 1, 4, rgb_collector_output, bitmap_reader_to_processing);
 
 		rgb_block_unzipper_rates =
 		{	1, 1, 1, 1};
@@ -201,7 +201,7 @@ public:
 		std::get < 3 > (zip_blocks->iport)(processing_to_writer_4);
 		zip_blocks->oport1(block_merger_input);
 
-		ForSyDe::SDF::make_sink("merge_and_write_sink", // Name
+		ForSyDe::SDF::make_sink("merge_and_write_blocks", // Name
 				merge_and_write_blocks_func, // Function to invoke
 				block_merger_input // Signal to report
 				);
