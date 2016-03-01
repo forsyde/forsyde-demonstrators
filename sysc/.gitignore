@@ -6,5 +6,9 @@
 !*/src/*
 !*Makefile
 !*.cpp
+!*.h
+!*.c
+!*.hpp
+!*.cc
 *~
 *#
