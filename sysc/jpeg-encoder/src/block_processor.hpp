@@ -22,14 +22,19 @@
 using namespace ForSyDe;
 using namespace ForSyDe::SDF;
 
-typedef std::tuple<std::vector<smaller_block>, std::vector<smaller_block>, std::vector<smaller_block>, std::vector<smaller_block>,
-		std::vector<smaller_block>, std::vector<smaller_block> > color_conversion_output_type;
+template<typename ...T>
+using tuple_of_vectors = std::tuple<std::vector<T>...>;
+
+typedef tuple_of_vectors <smaller_block,smaller_block,smaller_block,smaller_block,smaller_block,smaller_block> color_conversion_output_type;
+typedef tuple_of_vectors <huffman_encoding_output,huffman_encoding_output,huffman_encoding_output,huffman_encoding_output, huffman_encoding_output,huffman_encoding_output> concatenate_smaller_blocks_input_type;
+
+template<>const char* get_type_name<tuple_of_vectors<smaller_block,smaller_block,smaller_block,smaller_block,smaller_block,smaller_block>>(){
+	return "smaller_block.smaller_block.smaller_block.smaller_block.smaller_block.smaller_block";}
+template<>const char* get_type_name<tuple_of_vectors<huffman_encoding_output,huffman_encoding_output,huffman_encoding_output,huffman_encoding_output,
+						     huffman_encoding_output,huffman_encoding_output>>(){
+	return "huffman_encoding_output.huffman_encoding_output.huffman_encoding_output.huffman_encoding_output. huffman_encoding_output.huffman_encoding_output";}
 
 typedef unzipN<smaller_block, smaller_block, smaller_block, smaller_block, smaller_block, smaller_block> block_unzipper;
-
-typedef std::tuple<std::vector<huffman_encoding_output>, std::vector<huffman_encoding_output>, std::vector<huffman_encoding_output>,
-		std::vector<huffman_encoding_output>, std::vector<huffman_encoding_output>, std::vector<huffman_encoding_output>> concatenate_smaller_blocks_input_type;
-
 typedef zipN<huffman_encoding_output, huffman_encoding_output, huffman_encoding_output, huffman_encoding_output, huffman_encoding_output,
 		huffman_encoding_output> encoded_blocks_zipper;
 

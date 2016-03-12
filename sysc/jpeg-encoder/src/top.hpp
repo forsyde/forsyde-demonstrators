@@ -20,13 +20,19 @@
 using namespace ForSyDe;
 using namespace ForSyDe::SDF;
 
-typedef std::tuple<std::vector<encoded_block>, std::vector<encoded_block>, std::vector<encoded_block>, std::vector<encoded_block>> merge_blocks_input_type;
+template<typename ...T>
+using tuple_of_vectors = std::tuple<std::vector<T>...>;
+
+typedef tuple_of_vectors<encoded_block,encoded_block,encoded_block,encoded_block> merge_blocks_input_type;
+typedef tuple_of_vectors<bitmap_reader_output,bitmap_reader_output,bitmap_reader_output,bitmap_reader_output> rgb_collector_output_type;
+
+template<>const char* get_type_name<tuple_of_vectors<encoded_block,encoded_block,encoded_block,encoded_block>>(){
+	return "encoded_block.encoded_block.encoded_block.encoded_block";}
+template<>const char* get_type_name<tuple_of_vectors<bitmap_reader_output,bitmap_reader_output,bitmap_reader_output,bitmap_reader_output>>(){
+	return "bitmap_reader_output.bitmap_reader_output.bitmap_reader_output.bitmap_reader_output";}
+
 
 typedef zipN<encoded_block, encoded_block, encoded_block, encoded_block> merge_blocks_zipper;
-
-typedef std::tuple<std::vector<bitmap_reader_output>, std::vector<bitmap_reader_output>, std::vector<bitmap_reader_output>,
-		std::vector<bitmap_reader_output>> rgb_collector_output_type;
-
 typedef unzipN<bitmap_reader_output, bitmap_reader_output, bitmap_reader_output, bitmap_reader_output> rgb_block_unzipper;
 
 void read_bitmap_func(std::vector<bitmap_reader_output> &out, const std::vector<bitmap_reader_output> &inp1)
