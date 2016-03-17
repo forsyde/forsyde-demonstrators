@@ -1,5 +1,5 @@
 /**********************************************************************
-    * VADFilesink.hpp                                                 *
+    * vadSink.hpp                                                 *
     *                                                                 *
     * Author:  Hosein Attarzadeh (shan2@kth.se)                       *
     *          adapted from KisTA: https://github.com/nandohca/kista  *
@@ -19,9 +19,9 @@
 
 using namespace ForSyDe::SDF;
 
-void VADFilesink_func(std::string& line, const short& out)
+void vadSink_func(std::string& line, const short& out)
 {
-#pragma ForSyDe begin VADFilesink_func
+#pragma ForSyDe begin vadSink_func
 
     std::stringstream ss(line);
     ss << out;

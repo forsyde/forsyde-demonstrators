@@ -1,5 +1,5 @@
 /**********************************************************************
-    * VADhangover.hpp                                                 *
+    * hangover.hpp                                                 *
     *                                                                 *
     * Author:  Hosein Attarzadeh (shan2@kth.se)                       *
     *          adapted from KisTA: https://github.com/nandohca/kista  *
@@ -19,13 +19,13 @@
 
 using namespace ForSyDe::SDF;
 
-void VADhangover_func(std::vector<short>& out, std::vector<short> inp1)
+void hangover_func(token_t<short>& out, token_t<short> inp1)
 {
     // Resize all the vectors to contain 1 element
     out.resize(1);
     
     short out_vad;
-#pragma ForSyDe begin VADhangover_func
+#pragma ForSyDe begin hangover_func
     
     out_vad = vad_hangover(
         inp1[0]  // vad decision before hangover is added

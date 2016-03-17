@@ -1,44 +1,51 @@
 /**********************************************************************
-    * PredictorValues.hpp                                             *
+    * specComp.hpp                                          *
     *                                                                 *
     * Author:  Hosein Attarzadeh (shan2@kth.se)                       *
     *          adapted from KisTA: https://github.com/nandohca/kista  *
     *                                                                 *
-    * Purpose: The Predictor Values task                              *
+    * Purpose: The Spectral Comparison task                           *
     *                                                                 *
     * Usage:   The VAD example                                        *
     *                                                                 *
     * License: BSD3                                                   *
     *******************************************************************/
 
-#ifndef PREDICTORVALUES_HPP
-#define PREDICTORVALUES_HPP
+#ifndef SPECTRALCOMPARISON_HPP
+#define SPECTRALCOMPARISON_HPP
 
 #include <forsyde.hpp>
 #include <src/includes/vad.h>
 
 using namespace ForSyDe::SDF;
 
-void PredictorValues_func(std::vector<rav1_t>& out,
-                        std::vector<L_av_t> inp1)
+void specComp_func(token_t<short>& out,
+                            token_t<L_av_t> inp1,
+                            token_t<rav1_t> inp2)
 {
     // Resize all the vectors to contain 1 element
+    // TODO: Generalize
     out.resize(1);
     
-    short* out_rav_buff = std::get<0>(out[0]).data();
-    short* out_rav_scal = &std::get<1>(out[0]);
-#pragma ForSyDe begin PredictorValues_func
+    short* in_rav_buff = std::get<0>(inp2[0]).data();
+    short in_rav_scal = std::get<1>(inp2[0]);
+    
+    short out_stat;
+    
+#pragma ForSyDe begin specComp_func
     
     int in_L_av[9];
     for (auto i=0;i<9;i++) in_L_av[i] = inp1[0][i];
     
-    predictor_values(
-        in_L_av,        // ACF averaged over previous four frames
-        out_rav_buff,   // ACF obtained from in_buff
-        out_rav_scal    // out scaling factor
-    );
+    // Returns flag to indicate spectral stationarity
+    out_stat = spectral_comparison(
+        in_rav_buff,    // ACF obtained from L_av1
+        in_rav_scal,    // rav1[] scaling factor
+        in_L_av);       // ACF averaged over last four frames
     
 #pragma ForSyDe end
+    
+    out[0] = out_stat;
 }
 
 

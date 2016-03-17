@@ -1,5 +1,5 @@
 /**********************************************************************
-    * ACFAveraging.hpp                                                *
+    * acfAvg.hpp                                                *
     *                                                                 *
     * Author:  Hosein Attarzadeh (shan2@kth.se)                       *
     *          adapted from KisTA: https://github.com/nandohca/kista  *
@@ -19,10 +19,10 @@
 
 using namespace ForSyDe::SDF;
 
-void ACFAveraging_func(std::vector<tuple_of_vectors<L_av_t,L_av_t>>& out,
-                    std::vector<r_t> inp1,
-                    std::vector<r_t> inp2,
-                    std::vector<short> inp3)
+void acfAvg_func(token_t<token_tuple_t<L_av_t,L_av_t>>& out,
+                    token_t<r_t> inp1,
+                    token_t<r_t> inp2,
+                    token_t<short> inp3)
 {
     // Resize all the vectors to contain 1 element
     // TODO: Generalize
@@ -35,7 +35,7 @@ void ACFAveraging_func(std::vector<tuple_of_vectors<L_av_t,L_av_t>>& out,
     short in_scal_acf = inp3[0];
     short* tout_L_av0 = (std::get<0>(out[0]))[0].data();
     short* tout_L_av1 = (std::get<1>(out[0]))[0].data();
-#pragma ForSyDe begin ACFAveraging_func
+#pragma ForSyDe begin acfAvg_func
     int out_L_av0[9];
     int out_L_av1[9];
     

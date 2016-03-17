@@ -1,5 +1,5 @@
 /**********************************************************************
-    * ThresholdAdaptation.hpp                                         *
+    * thrAdp.hpp                                         *
     *                                                                 *
     * Author:  Hosein Attarzadeh (shan2@kth.se)                       *
     *          adapted from KisTA: https://github.com/nandohca/kista  *
@@ -19,8 +19,8 @@
 
 using namespace ForSyDe::SDF;
 
-void ThresholdAdaptation_func(std::vector<tuple_of_vectors<rvad_t,Pfloat>>& out,
-                            std::vector<tuple_of_vectors<rav1_t,short,pvad_acf0_t,short,short>> inp1)
+void thrAdp_func(token_t<token_tuple_t<rvad_t,Pfloat>>& out,
+                            token_t<token_tuple_t<rav1_t,short,pvad_acf0_t,short,short>> inp1)
 {
     // Resize all the output vectors to contain 1 element
     // TODO: Generalize
@@ -40,7 +40,7 @@ void ThresholdAdaptation_func(std::vector<tuple_of_vectors<rvad_t,Pfloat>>& out,
     short* out_rvad_scal = &std::get<1>((std::get<0>(out[0]))[0]);
     Pfloat* out_thvad = &(std::get<1>(out[0]))[0];
     
-#pragma ForSyDe begin ThresholdAdaptation_func
+#pragma ForSyDe begin thrAdp_func
 
     threshold_adaptation(
         in_stat,        // flag to indicate spectral stationarity

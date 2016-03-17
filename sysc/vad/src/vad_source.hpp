@@ -19,7 +19,7 @@
 
 using namespace ForSyDe::SDF;
 
-void VADFilesource_func(tuple_of_vectors<r_t,r_t,r_t,short,short,rc_t,short>& out,
+void vadSource_func(token_tuple_t<r_t,r_t,r_t,short,short,rc_t,short>& out,
                         const std::string& line)
 {
     // Resize all the vectors to contain 1 element
@@ -31,7 +31,7 @@ void VADFilesource_func(tuple_of_vectors<r_t,r_t,r_t,short,short,rc_t,short>& ou
     std::get<4>(out).resize(1);
     std::get<5>(out).resize(1);
     std::get<6>(out).resize(1);
-#pragma ForSyDe begin VADFilesource_func
+#pragma ForSyDe begin vadSource_func
 
     std::stringstream ss(line);
     
