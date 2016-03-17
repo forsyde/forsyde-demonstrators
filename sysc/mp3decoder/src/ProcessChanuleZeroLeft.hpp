@@ -2,28 +2,21 @@
 #ifndef ProcessChanuleZeroLeft_HPP
 #define ProcessChanuleZeroLeft_HPP
 
-#include <forsyde.hpp>
 #include "include/MP3Decoder.h"
+#include "include/MP3Decoder_types.hpp"
 
 using namespace std;
 
-typedef tuple<
-        vector<ChanuleSamples>,
-        vector<VecType>
-    > ChanuleType;
-DEFINE_TYPE_NAME(ChanuleType,"ChanuleSamples.VecType");
-
-
 void ProcessChanuleZeroLeft_func(
-    vector<ChanuleType>&              outs, // headerChanuleLeft
-    const vector<FrameHeader>&        inp1, // headerGranule
-    const vector<FrameSideInfo>&      inp2, // sideInfoGranule
-    const vector<ChanuleData>&        inp3, // chanuleData
-    const vector<VecType>&            inp4  // sync
+    token_t<ChanuleType>&              outs, // headerChanuleLeft
+    const token_t<FrameHeader>&        inp1, // headerGranule
+    const token_t<FrameSideInfo>&      inp2, // sideInfoGranule
+    const token_t<ChanuleData>&        inp3, // chanuleData
+    const token_t<VecType>&            inp4  // sync
 )
 {
-    vector<ChanuleSamples>         out1(1);
-    vector<VecType>                out2(1);
+    token_t<ChanuleSamples>         out1(1);
+    token_t<VecType>                out2(1);
 #pragma ForSyDe begin ProcessChanuleZeroLeft_func
 
     /* User-defined local variables */

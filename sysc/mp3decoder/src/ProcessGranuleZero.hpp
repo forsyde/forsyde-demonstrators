@@ -2,34 +2,24 @@
 #ifndef ProcessGranuleZero_HPP
 #define ProcessGranuleZero_HPP
 
-#include <forsyde.hpp>
 #include "include/MP3Decoder.h"
+#include "include/MP3Decoder_types.hpp"
 
 using namespace std;
 
-typedef tuple<
-        vector<FrameHeader>,            // headerChanuleLeft
-        vector<FrameSideInfo>,          // sideInfoChanuleLeft
-        vector<ChanuleData>,            // chanuleDataLeft
-        vector<FrameHeader>,            // headerChanuleRight
-        vector<FrameSideInfo>,          // sideInfoChanuleRight
-        vector<ChanuleData>             // chanuleDataRight
-    > GranuleType;
-DEFINE_TYPE_NAME(GranuleType,"FrameHeader.FrameSideInfo.ChanuleData.FrameHeader.FrameSideInfo.ChanuleData");
-
 void ProcessGranuleZero_func(
-    vector<GranuleType>&              outs,
-    const vector<FrameHeader>&        inp1, // headerGranule
-    const vector<FrameSideInfo>&      inp2, // sideInfoGranule
-    const vector<GranuleData>&        inp3  // granuleData
+    token_t<GranuleType>&              outs,
+    const token_t<FrameHeader>&        inp1, // headerGranule
+    const token_t<FrameSideInfo>&      inp2, // sideInfoGranule
+    const token_t<GranuleData>&        inp3  // granuleData
 )
 {
-    vector<FrameHeader>         out1(1);    // headerChanuleLeft
-    vector<FrameSideInfo>       out2(1);    // sideInfoChanuleLeft
-    vector<ChanuleData>         out3(1);    // chanuleDataLeft
-    vector<FrameHeader>         out4(1);    // headerChanuleRight
-    vector<FrameSideInfo>       out5(1);    // sideInfoChanuleRight
-    vector<ChanuleData>         out6(1);    // chanuleDataRight
+    token_t<FrameHeader>         out1(1);    // headerChanuleLeft
+    token_t<FrameSideInfo>       out2(1);    // sideInfoChanuleLeft
+    token_t<ChanuleData>         out3(1);    // chanuleDataLeft
+    token_t<FrameHeader>         out4(1);    // headerChanuleRight
+    token_t<FrameSideInfo>       out5(1);    // sideInfoChanuleRight
+    token_t<ChanuleData>         out6(1);    // chanuleDataRight
 
 #pragma ForSyDe begin ProcessGranuleZero_func
 

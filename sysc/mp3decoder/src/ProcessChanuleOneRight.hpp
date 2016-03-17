@@ -4,24 +4,20 @@
 
 #include <forsyde.hpp>
 #include "include/MP3Decoder.h"
+#include "include/MP3Decoder_types.hpp"
 
 using namespace std;
 
-typedef tuple<
-        vector<ChanuleSamples>,
-        vector<VecType>
-    > ChanuleType;
-
 void ProcessChanuleOneRight_func(
-    vector<ChanuleType>&              outs, // headerChanuleLeft
-    const vector<FrameHeader>&        inp1, // headerGranule
-    const vector<FrameSideInfo>&      inp2, // sideInfoGranule
-    const vector<ChanuleData>&        inp3, // chanuleData
-    const vector<VecType>&            inp4  // sync
+    token_t<ChanuleType>&              outs, // headerChanuleLeft
+    const token_t<FrameHeader>&        inp1, // headerGranule
+    const token_t<FrameSideInfo>&      inp2, // sideInfoGranule
+    const token_t<ChanuleData>&        inp3, // chanuleData
+    const token_t<VecType>&            inp4  // sync
 )
 {
-    vector<ChanuleSamples>         out1(1);
-    vector<VecType>                out2(1);
+    token_t<ChanuleSamples>         out1(1);
+    token_t<VecType>                out2(1);
 #pragma ForSyDe begin ProcessChanuleOneRight_func
 
     /* User-defined local variables */

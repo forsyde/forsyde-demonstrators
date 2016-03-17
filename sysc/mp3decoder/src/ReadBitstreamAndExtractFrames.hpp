@@ -2,37 +2,24 @@
 #ifndef ReadBitstreamAndExtractFrames_HPP
 #define ReadBitstreamAndExtractFrames_HPP
 
-#include <forsyde.hpp>
 #include "include/MP3Decoder.h"
+#include "include/MP3Decoder_types.hpp"
 
 using namespace std;
 
-typedef tuple<
-        vector<float>,                // dummyCounter
-        vector<bool>,               // lastFrame
-        vector<FrameHeader>,        // headerMerge
-        vector<FrameHeader>,        // headerGranule0
-        vector<FrameSideInfo>,      // sideInfoGranule0
-        vector<GranuleData>,        // granuleData0
-        vector<FrameHeader>,        // headerGranule1
-        vector<FrameSideInfo>,      // sideInfoGranule1
-        vector<GranuleData>         // granuleData1
-    > InputType;
-DEFINE_TYPE_NAME(InputType,"float.bool.FrameHeader.FrameHeader.FrameSideInfo.GranuleData.FrameHeader.FrameSideInfo.GranuleData");
-
 void ReadBitstreamAndExtractFrames_func(
-    vector<InputType>& outs,
-    const vector<float>& inp1)
+    token_t<InputType>& outs,
+    const token_t<float>& inp1)
 {
-    vector<float>               out1(1);    // dummyCounter
-    vector<bool>                out2(1);    // lastFrame
-    vector<FrameHeader>         out3(1);    // headerMerge
-    vector<FrameHeader>         out4(1);    // headerGranule0
-    vector<FrameSideInfo>       out5(1);    // sideInfoGranule0
-    vector<GranuleData>         out6(1);    // granuleData0
-    vector<FrameHeader>         out7(1);    // headerGranule1
-    vector<FrameSideInfo>       out8(1);    // sideInfoGranule1
-    vector<GranuleData>         out9(1);    // granuleData1
+    token_t<float>               out1(1);    // dummyCounter
+    token_t<bool>                out2(1);    // lastFrame
+    token_t<FrameHeader>         out3(1);    // headerMerge
+    token_t<FrameHeader>         out4(1);    // headerGranule0
+    token_t<FrameSideInfo>       out5(1);    // sideInfoGranule0
+    token_t<GranuleData>         out6(1);    // granuleData0
+    token_t<FrameHeader>         out7(1);    // headerGranule1
+    token_t<FrameSideInfo>       out8(1);    // sideInfoGranule1
+    token_t<GranuleData>         out9(1);    // granuleData1
 
 #pragma ForSyDe begin ReadBitstreamAndExtractFrames_func
     /* User-defined local variables */

@@ -1,12 +1,11 @@
 /**********************************************************************           
-    * main.cpp -- the main file and testbench for the sorter example  *
+    * main.cpp --                                                     *
     *                                                                 *
     * Author:  Hosein Attarzadeh (shan2@kth.se)                       *
     *                                                                 *
     * Purpose: Demonstration of a simple program.                     *
     *                                                                 *
-    * Usage:   Sorter example                                         *
-    *          inspired by material from Doulos SystemC course        *
+    * Usage:                                                          *
     *                                                                 *
     * License: BSD3                                                   *
     *******************************************************************/

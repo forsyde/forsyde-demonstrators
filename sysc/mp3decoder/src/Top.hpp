@@ -1,4 +1,6 @@
+#include <forsyde.hpp>
 
+#include "include/MP3Decoder_types.hpp"
 #include "ReadBitstreamAndExtractFrames.hpp"
 #include "ProcessChanuleZeroLeft.hpp"
 #include "ProcessChanuleZeroRight.hpp"
@@ -10,90 +12,6 @@
 
 using namespace ForSyDe::SDF;
 using namespace std;
-
-ostream& operator <<(ostream &os,const ChanuleSamples &obj)
-{
-      //~ os<<obj.strVal;
-      return os;
-}
-ostream& operator <<(ostream &os,const ChanuleData &obj)
-{
-      //~ os<<obj.strVal;
-      return os;
-}
-ostream& operator <<(ostream &os,const GranuleData &obj)
-{
-      //~ os<<obj.strVal;
-      return os;
-}
-ostream& operator <<(ostream &os,const FrameSideInfo &obj)
-{
-      //~ os<<obj.strVal;
-      return os;
-}
-ostream& operator <<(ostream &os,const FrameHeader &obj)
-{
-      //~ os<<obj.strVal;
-      return os;
-}
-ostream& operator <<(ostream &os,const VecType &obj)
-{
-      //~ os<<obj.strVal;
-      return os;
-}
-
-typedef comb<InputType,float> ReadBitstreamAndExtractFrames;
-
-typedef comb4<tuple< vector<ChanuleSamples>, vector<VecType> >
-               ,FrameHeader,FrameSideInfo,ChanuleData,VecType
-         > ProcessChanule;
-
-typedef comb3<
-    tuple<
-        vector<FrameHeader>,
-        vector<FrameSideInfo>,
-        vector<ChanuleData>,
-        vector<FrameHeader>,
-        vector<FrameSideInfo>,
-        vector<ChanuleData>
-    >,FrameHeader,FrameSideInfo,GranuleData> ProcessGranule;
-
-typedef unzipN<
-        FrameHeader,
-        FrameSideInfo,
-        ChanuleData,
-        FrameHeader,
-        FrameSideInfo,
-        ChanuleData
-    > GranuelUnzipper;
-
-typedef unzipN<
-        ChanuleSamples,
-        VecType
-    > ChanuleUnzipper;
-
-typedef unzipN<
-        float,
-        bool,
-        FrameHeader,
-        FrameHeader,
-        FrameSideInfo,
-        GranuleData,
-        FrameHeader,
-        FrameSideInfo,
-        GranuleData
-    > InputUnzipper;
-
-typedef zipN<
-    ChanuleSamples,
-    ChanuleSamples,
-    bool,
-    FrameHeader,
-    ChanuleSamples,
-    ChanuleSamples
-    > MergeZipper;
-
-typedef sink<MergeType> Merge;
 
 SC_MODULE(Top)
 {
@@ -321,14 +239,14 @@ public:
         a_ch_1l_0l->oport1(*sync_1l_0l_aftdel);
     }
 #ifdef FORSYDE_INTROSPECTION
-public:
-    void start_of_simulation()
-    {
-      system("mkdir -p ir");
-        ForSyDe::XMLExport dumper("ir/");
-        dumper.traverse(this);
-        //~ dumper.printXML("gen/mp3decoder.xml");
-        //~ dumper.printSrc("./","gen/");
-    }
+  void start_of_simulation()
+  {
+    system("mkdir -p ir");
+    ForSyDe::XMLExport dumper("ir/");
+    dumper.traverse(this);
+#ifdef FORSYDE_TYPE_INTROSPECTION
+    ForSyDe::TypeContainer::get().printXML("ir/types.xml");
+#endif  
+  }
 #endif
 };

@@ -2,30 +2,20 @@
 #ifndef Merge_HPP
 #define Merge_HPP
 
-#include <forsyde.hpp>
 #include "include/MP3Decoder.h"
+#include "include/MP3Decoder_types.hpp"
 
 using namespace ForSyDe::SDF;
 using namespace std;
 
-typedef tuple<
-    vector<ChanuleSamples>,
-    vector<ChanuleSamples>,
-    vector<bool>,
-    vector<FrameHeader>,
-    vector<ChanuleSamples>,
-    vector<ChanuleSamples>
-    > MergeType;
-DEFINE_TYPE_NAME(MergeType,"ChanuleSamples.ChanuleSamples.bool.FrameHeader.ChanuleSamples.ChanuleSamples");
-
 void Merge_func(const MergeType& inp)
 {
-        vector<ChanuleSamples>  inp1 = get<0>(inp);
-        vector<ChanuleSamples>  inp2 = get<1>(inp);
-        vector<bool>            inp3 = get<2>(inp);
-        vector<FrameHeader>     inp4 = get<3>(inp);
-        vector<ChanuleSamples>  inp5 = get<4>(inp);
-        vector<ChanuleSamples>  inp6 = get<5>(inp);
+        token_t<ChanuleSamples>  inp1 = get<0>(inp);
+        token_t<ChanuleSamples>  inp2 = get<1>(inp);
+        token_t<bool>            inp3 = get<2>(inp);
+        token_t<FrameHeader>     inp4 = get<3>(inp);
+        token_t<ChanuleSamples>  inp5 = get<4>(inp);
+        token_t<ChanuleSamples>  inp6 = get<5>(inp);
 
 #pragma ForSyDe begin Merge_func
 
