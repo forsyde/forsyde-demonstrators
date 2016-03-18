@@ -13,8 +13,15 @@ The `Makefile` provided works in a [ForSyDe Shell](https://github.com/forsyde/fo
  * `FORSYDE_INTROSPECTION` : introspection for the ForSyDe process network. The result intermediare representation (.xml files) is dumped in the `ir` folder.
  * `FORSYDE_TYPE_INTROSPECTION` : introspection for the data types in the ForSyDe system. The result (.xml file) is dumped in `ir/types.xml`. Works only if `FORSYDE_INTROSPECTION` is also enabled.
 
+After compilation a binary is created in the curret folder and the application is executed with:
+
+    ./run.x                      ## normally
+    # execute-model [-options]   ## in a ForSyDe-Shell environment
+
 ## Project structure
 
  * `Makefile` : is the GNU make file. Works only in a [ForSyDe Shell](https://github.com/forsyde/forsyde-shell) environment.
  * `src/` : contains the source code
  * `files/` : contains additional input or reference files for this application. It also contains project files relevant for [ForSyDe Shell](https://github.com/forsyde/forsyde-shell).
+
+Additional folders are created during the ForSyDe design flow.
