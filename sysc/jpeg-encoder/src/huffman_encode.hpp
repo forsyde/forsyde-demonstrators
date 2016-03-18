@@ -73,17 +73,17 @@ unsigned huffman_magnitude(const short value)
 	return m;
 }
 
-void print_huffman_output(huffman_encoding_output* huffman_output)
+void print_huffman_out(huffman_encoding_out* huffman_out)
 {
-	printf("\t%u\n", huffman_output->bit_position);
+	printf("\t%u\n", huffman_out->bit_position);
 	unsigned int i;
 	for (i = 0; i < 8; i++)
 	{
-		printf("\t%x\n", huffman_output->content[i]);
+		printf("\t%x\n", huffman_out->content[i]);
 	}
 }
 
-void write_huffman_output(huffman_encoding_output* output, unsigned int bits_to_write, unsigned int number_of_bits_to_write)
+void write_huffman_out(huffman_encoding_out* output, unsigned int bits_to_write, unsigned int number_of_bits_to_write)
 {
 #ifdef VERBOSE
 	printf("Adding %u bits to the buffer of block %u\n", number_of_bits_to_write, block_number);
@@ -115,7 +115,7 @@ void write_huffman_output(huffman_encoding_output* output, unsigned int bits_to_
 
 	output->bit_position += number_of_bits_to_write;
 
-//	print_huffman_output(output);
+//	print_huffman_out(output);
 
 	//	printf("BP: %u\n", output->bit_position);
 	//	for (i = 0; i < 8; i++)
@@ -125,17 +125,17 @@ void write_huffman_output(huffman_encoding_output* output, unsigned int bits_to_
 	//	printf("\n");
 }
 
-void init_huffman_output(huffman_encoding_output* output)
+void init_huffman_out(huffman_encoding_out* output)
 {
 	output->bit_position = 0;
 	memset(output->content, 0, 8 * sizeof (int));
 }
 
-void huffman_encode(huffman_t * const ctx, const short data[], huffman_encoding_output* current_output)
+void huffman_encode(huffman_t * const ctx, const short data[], huffman_encoding_out* current_out)
 {
 
 	// initialize the current output block
-	init_huffman_output(current_output);
+	init_huffman_out(current_out);
 
 
 	unsigned magn, bits;
@@ -157,7 +157,7 @@ void huffman_encode(huffman_t * const ctx, const short data[], huffman_encoding_
 
 	//	writebits(&bitbuf, ctx->hdcbit[magn], ctx->hdclen[magn]);
 
-	write_huffman_output(current_output, ctx->hdcbit[magn], ctx->hdclen[magn]);
+	write_huffman_out(current_out, ctx->hdcbit[magn], ctx->hdclen[magn]);
 	//	printf("%x %x\n", ctx->hdcbit[magn], ctx->hdclen[magn]);
 	//	printf("%u\n", ctx->hdclen[magn]);
 
@@ -165,7 +165,7 @@ void huffman_encode(huffman_t * const ctx, const short data[], huffman_encoding_
 
 	sum_of_bits += ctx->hdclen[magn];
 	//	writebits(&bitbuf, bits, magn);
-	write_huffman_output(current_output, bits, magn);
+	write_huffman_out(current_out, bits, magn);
 	//	printf("%u\n", magn);
 
 	sum_of_bits += magn;
@@ -184,7 +184,7 @@ void huffman_encode(huffman_t * const ctx, const short data[], huffman_encoding_
 				zerorun -= 16;
 				// ZRL
 				//				writebits(&bitbuf, ctx->hacbit[15][0], ctx->haclen[15][0]);
-				write_huffman_output(current_output, ctx->hacbit[15][0], ctx->haclen[15][0]);
+				write_huffman_out(current_out, ctx->hacbit[15][0], ctx->haclen[15][0]);
 				//				printf("%u\n", ctx->haclen[15][0]);
 
 				sum_of_bits += ctx->haclen[15][0];
@@ -194,12 +194,12 @@ void huffman_encode(huffman_t * const ctx, const short data[], huffman_encoding_
 			magn = huffman_magnitude(ac);
 
 			//			writebits(&bitbuf, ctx->hacbit[zerorun][magn], ctx->haclen[zerorun][magn]);
-			write_huffman_output(current_output, ctx->hacbit[zerorun][magn], ctx->haclen[zerorun][magn]);
+			write_huffman_out(current_out, ctx->hacbit[zerorun][magn], ctx->haclen[zerorun][magn]);
 			//			printf("%u\n", ctx->haclen[zerorun][magn]);
 
 			sum_of_bits += ctx->haclen[zerorun][magn];
 			//			writebits(&bitbuf, bits, magn);
-			write_huffman_output(current_output, bits, magn);
+			write_huffman_out(current_out, bits, magn);
 			//			printf("%u\n", magn);
 			sum_of_bits += magn;
 
@@ -211,7 +211,7 @@ void huffman_encode(huffman_t * const ctx, const short data[], huffman_encoding_
 	if (zerorun)
 	{ // EOB - End Of Block
 		//		writebits(&bitbuf, ctx->hacbit[0][0], ctx->haclen[0][0]);
-		write_huffman_output(current_output, ctx->hacbit[0][0], ctx->haclen[0][0]);
+		write_huffman_out(current_out, ctx->hacbit[0][0], ctx->haclen[0][0]);
 		//		printf("%u\n", ctx->haclen[0][0]);
 
 		sum_of_bits += ctx->haclen[0][0];
@@ -219,9 +219,9 @@ void huffman_encode(huffman_t * const ctx, const short data[], huffman_encoding_
 	
 //	printf("\n");
 	//	overall_sum_of_bits += sum_of_bits;
-	//	printf("Bits written in this block: %u, overall: %u\n", current_output.bit_position, overall_sum_of_bits);
+	//	printf("Bits written in this block: %u, overall: %u\n", current_out.bit_position, overall_sum_of_bits);
 
-	//	return current_output;
+	//	return current_out;
 }
 
 

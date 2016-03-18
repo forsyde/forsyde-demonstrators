@@ -17,7 +17,7 @@
 #include "types.h"
 #include "tables.h"
 
-unsigned int jpeg_output_file;
+unsigned int jpeg_out_file;
 
 unsigned int jpgn = 0;
 
@@ -27,7 +27,7 @@ unsigned int byte_counter = 0;
 void write_jpeg(const unsigned char buff[], const unsigned size)
 {
 
-	write(jpeg_output_file, buff, size);
+	write(jpeg_out_file, buff, size);
 }
 
 static void writebyte(const unsigned char b)
@@ -193,7 +193,7 @@ unsigned int delete_byte_from_word(unsigned int input_word, unsigned int left_bo
 	return input_word & (0xFFFFFF >> (32 - left_border));
 }
 
-unsigned char get_oldest_byte(block_output* block)
+unsigned char get_oldest_byte(block_out* block)
 {
 	unsigned char output_byte;
 
@@ -220,11 +220,11 @@ unsigned char get_oldest_byte(block_output* block)
 		block->bit_position -= 8;
 	}
 //	printf("output_byte: %x\n", output_byte);
-//	print_block_output(block);
+//	print_block_out(block);
 	return output_byte;
 }
 
-void add_remaining_bits(block_output* block, unsigned char remaining_data, unsigned int remaining_data_count)
+void add_remaining_bits(block_out* block, unsigned char remaining_data, unsigned int remaining_data_count)
 {
 	unsigned int target_word = block->bit_position >> 5;
 	unsigned int position_in_target_word = block->bit_position - (target_word << 5);
@@ -243,16 +243,16 @@ void add_remaining_bits(block_output* block, unsigned char remaining_data, unsig
 	block->bit_position += remaining_data_count;
 }
 
-void write_jpeg_file(block_output* incoming_block)
+void write_jpeg_file(block_out* incoming_block)
 {
 	if (remaining_data_count > 0)
 	{
 //		printf("Adding %u remaining bits: %x...\n", remaining_data_count, remaining_data);
 //		printf("Before:\n");
-//		print_block_output(incoming_block);
+//		print_block_out(incoming_block);
 		add_remaining_bits(incoming_block, remaining_data, remaining_data_count);
 //		printf("After:\n");
-//		print_block_output(incoming_block);
+//		print_block_out(incoming_block);
 //		printf("\n\n\n");
 	}
 
@@ -275,12 +275,12 @@ void write_jpeg_file(block_output* incoming_block)
 void initialize_jpeg_file(unsigned int width, unsigned int height)
 {
 
-	if ((jpeg_output_file = open("files/output_file.jpg", O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR)) < 0)
+	if ((jpeg_out_file = open("files/output_file.jpg", O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR)) < 0)
 	{
 		printf("The JPEG output file could not be created...\n");
 	}
 
-	write_jpeg_header(jpeg_output_file, height, width);
+	write_jpeg_header(jpeg_out_file, height, width);
 }
 
 #endif	/* JPEG_WRITER_HPP */

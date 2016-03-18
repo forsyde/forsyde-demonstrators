@@ -18,7 +18,7 @@
 #define	HUFFMAN_CTX_Cb	&huffman_ctx[1]
 #define	HUFFMAN_CTX_Cr	&huffman_ctx[2]
 
-void print_block_output(block_output* block)
+void print_block_out(block_out* block)
 {
 	printf("\t%u\n", block->bit_position);
 	unsigned int i;
@@ -32,23 +32,23 @@ void print_block_output(block_output* block)
 	}
 }
 
-void write_block_output(block_output* output, huffman_encoding_output* huffman_output)
+void write_block_out(block_out* out, huffman_encoding_out* huffman_out)
 {
 #ifdef VERBOSE
-	printf("Adding %u bits to the buffer of block %u\n", huffman_output->bit_position, huffman_output->block_id);
+	printf("Adding %u bits to the buffer of block %u\n", huffman_out->bit_position, huffman_out->block_id);
 #endif
-	//	print_block_output(output);
+	//	print_block_out(out);
 
 	unsigned int i, current_position, test_count = 0;
 
-	current_position = huffman_output->bit_position;
+	current_position = huffman_out->bit_position;
 
 	// first shift whole words to the left
 	while (current_position >= 32)
 	{
 		for (i = 47; i > 0; i--)
 		{
-			output->content[i] = output->content[i - 1];
+			out->content[i] = out->content[i - 1];
 		}
 		current_position -= 32;
 		test_count++;
@@ -56,7 +56,7 @@ void write_block_output(block_output* output, huffman_encoding_output* huffman_o
 
 	for (i = 0; i < test_count; i++)
 	{
-		output->content[i] = 0;
+		out->content[i] = 0;
 	}
 	if (current_position != 0)
 	{
@@ -65,50 +65,50 @@ void write_block_output(block_output* output, huffman_encoding_output* huffman_o
 
 		for (i = 47; i > 0; i--)
 		{
-			output->content[i] = (output->content[i - 1] >> shift_amount_inversed) | (output->content[i] << current_position);
+			out->content[i] = (out->content[i - 1] >> shift_amount_inversed) | (out->content[i] << current_position);
 		}
 
-		output->content[0] = output->content[0] << current_position;
+		out->content[0] = out->content[0] << current_position;
 	}
 
 	// now that all bits are shifted, concatenate both arrays
 	for (i = 0; i < 8; i++)
 	{
-		output->content[i] = output->content[i] | huffman_output->content[i];
+		out->content[i] = out->content[i] | huffman_out->content[i];
 	}
 
-	output->bit_position += huffman_output->bit_position;
+	out->bit_position += huffman_out->bit_position;
 
-//	print_block_output(output);
+//	print_block_out(out);
 }
 
-void init_block_output(block_output* output)
+void init_block_out(block_out* out)
 {
-	output->bit_position = 0;
-	memset(output->content, 0, 48 * sizeof(int));
+	out->bit_position = 0;
+	memset(out->content, 0, 48 * sizeof(int));
 }
 
-//block_output current_block_output;
+//block_out current_block_out;
 
-// changes the block_output variable declared above
+// changes the block_out variable declared above
 // after this function is finished and before it gets called next,
-// current_block_output needs to be processed
+// current_block_out needs to be processed
 
-void process_current_block(const BGR current_color_block[16][16], block_output* current_block_output)
-//void process_current_block(const bitmap_reader_output* input_data, block_output* current_block_output)
+void process_current_block(const BGR current_color_block[16][16], block_out* current_block_out)
+//void process_current_block(const bitmap_reader_out* in_data, block_out* current_block_out)
 
-//void process_current_block(const bitmap_reader_output* input_data, encoded_block* output_data)
+//void process_current_block(const bitmap_reader_out* in_data, encoded_block* out_data)
 {
-//	BGR current_color_block[16][16] = input_data->color_block;
+//	BGR current_color_block[16][16] = in_data->color_block;
 
-//	block_output* current_block_output = &output_data->current_block_data;
+//	block_out* current_block_out = &out_data->current_block_data;
 
 // route all incoming information about the picture through this block
-//	output_data->block_id = input_data->block_id;
-//	output_data->height = input_data->height;
-//	output_data->width = input_data->width;
+//	out_data->block_id = in_data->block_id;
+//	out_data->height = in_data->height;
+//	out_data->width = in_data->width;
 
-	init_block_output(current_block_output);
+	init_block_out(current_block_out);
 
 	// four blocks of 8x8 Y
 	short Y8x8[2][2][8][8];
@@ -119,11 +119,11 @@ void process_current_block(const BGR current_color_block[16][16], block_output* 
 
 	unsigned int i, j, r, c;
 
-	// the output of the individual Huffman encoding steps
+	// the out of the individual Huffman encoding steps
 	// will be overwritten with every new step
-	// but written to the block output before that
-	huffman_encoding_output huffman_step_output;
-	//	init_huffman_output(&huffman_step_output);
+	// but written to the block out before that
+	huffman_encoding_out huffman_step_out;
+	//	init_huffman_out(&huffman_step_out);
 
 	// getting four 8x8 Y-blocks
 	for (i = 0; i < 2; i++)
@@ -158,46 +158,46 @@ void process_current_block(const BGR current_color_block[16][16], block_output* 
 
 	// 1 Y-compression
 	dct3(Y8x8[0][0], Y8x8[0][0]);
-	huffman_encode(HUFFMAN_CTX_Y, (short*) Y8x8[0][0], &huffman_step_output);
+	huffman_encode(HUFFMAN_CTX_Y, (short*) Y8x8[0][0], &huffman_step_out);
 
-//	printf("Got %u bits form Huffman step\n", huffman_step_output.bit_position);
-	write_block_output(current_block_output, &huffman_step_output);
+//	printf("Got %u bits form Huffman step\n", huffman_step_out.bit_position);
+	write_block_out(current_block_out, &huffman_step_out);
 
 //	printf("\n");
 
 	// 2 Y-compression
 	dct3(Y8x8[0][1], Y8x8[0][1]);
-	huffman_encode(HUFFMAN_CTX_Y, (short*) Y8x8[0][1], &huffman_step_output);
-//	printf("Got %u bits form Huffman step\n", huffman_step_output.bit_position);
-	write_block_output(current_block_output, &huffman_step_output);
+	huffman_encode(HUFFMAN_CTX_Y, (short*) Y8x8[0][1], &huffman_step_out);
+//	printf("Got %u bits form Huffman step\n", huffman_step_out.bit_position);
+	write_block_out(current_block_out, &huffman_step_out);
 //	printf("\n");
 
 	// 3 Y-compression
 	dct3(Y8x8[1][0], Y8x8[1][0]);
-	huffman_encode(HUFFMAN_CTX_Y, (short*) Y8x8[1][0], &huffman_step_output);
-//	printf("Got %u bits form Huffman step\n", huffman_step_output.bit_position);
-	write_block_output(current_block_output, &huffman_step_output);
+	huffman_encode(HUFFMAN_CTX_Y, (short*) Y8x8[1][0], &huffman_step_out);
+//	printf("Got %u bits form Huffman step\n", huffman_step_out.bit_position);
+	write_block_out(current_block_out, &huffman_step_out);
 //	printf("\n");
 
 	// 4 Y-compression
 	dct3(Y8x8[1][1], Y8x8[1][1]);
-	huffman_encode(HUFFMAN_CTX_Y, (short*) Y8x8[1][1], &huffman_step_output);
-//	printf("Got %u bits form Huffman step\n", huffman_step_output.bit_position);
-	write_block_output(current_block_output, &huffman_step_output);
+	huffman_encode(HUFFMAN_CTX_Y, (short*) Y8x8[1][1], &huffman_step_out);
+//	printf("Got %u bits form Huffman step\n", huffman_step_out.bit_position);
+	write_block_out(current_block_out, &huffman_step_out);
 //	printf("\n");
 
 	// Cb-compression
 	dct3(Cb8x8, Cb8x8);
-	huffman_encode(HUFFMAN_CTX_Cb, (short*) Cb8x8, &huffman_step_output);
-//	printf("Got %u bits form Huffman step\n", huffman_step_output.bit_position);
-	write_block_output(current_block_output, &huffman_step_output);
+	huffman_encode(HUFFMAN_CTX_Cb, (short*) Cb8x8, &huffman_step_out);
+//	printf("Got %u bits form Huffman step\n", huffman_step_out.bit_position);
+	write_block_out(current_block_out, &huffman_step_out);
 //	printf("\n");
 
 	// Cr-compression
 	dct3(Cr8x8, Cr8x8);
-	huffman_encode(HUFFMAN_CTX_Cr, (short*) Cr8x8, &huffman_step_output);
-//	printf("Got %u bits form Huffman step\n", huffman_step_output.bit_position);
-	write_block_output(current_block_output, &huffman_step_output);
+	huffman_encode(HUFFMAN_CTX_Cr, (short*) Cr8x8, &huffman_step_out);
+//	printf("Got %u bits form Huffman step\n", huffman_step_out.bit_position);
+	write_block_out(current_block_out, &huffman_step_out);
 //	printf("\n");
 
 }

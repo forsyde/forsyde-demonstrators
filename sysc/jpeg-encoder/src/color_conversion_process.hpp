@@ -17,7 +17,7 @@ using namespace ForSyDe::SDF;
 
 SC_MODULE(color_conversion)
 {
-	SDF_in<bitmap_reader_output> iport1;
+	SDF_in<bitmap_reader_out> iport1;
 	// Cb
 	SDF_out<short[8][8]> oport1;
 	// Cr

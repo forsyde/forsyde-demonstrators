@@ -37,7 +37,7 @@ unsigned int height;
 
 colorRGB* RGB_buffer;
 
-void init_bitmap(bitmap_reader_output* output_data)
+void init_bitmap(bitmap_reader_out* output_data)
 {
 	width = (unsigned int) (bmp_data[19] * 256 + bmp_data[18]);
 	height = (unsigned int) (bmp_data[23] * 256 + bmp_data[22]);
@@ -52,7 +52,7 @@ void init_bitmap(bitmap_reader_output* output_data)
 //	output_data->color_block = NULL;
 }
 
-void read_bitmap(const bitmap_reader_output* input_data, bitmap_reader_output* output_data)
+void read_bitmap(const bitmap_reader_out* input_data, bitmap_reader_out* output_data)
 {
 	unsigned int MCU_x, MCU_y;
 	int i = 0;
