@@ -8,7 +8,7 @@
 #ifndef READ_BITMAP_HPP
 #define	READ_BITMAP_HPP
 
-#include "types.h"
+#include "c_types.h"
 //#include "lena.h"
 #include "files/cat.h"
 //#include "ray.h"

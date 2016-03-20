@@ -8,7 +8,7 @@
 #ifndef SUBSAMPLE_HPP
 #define	SUBSAMPLE_HPP
 
-#include "types.h"
+#include "c_types.h"
 
 /*
  RGB to YCbCr Conversion:

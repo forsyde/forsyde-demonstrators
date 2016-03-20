@@ -8,7 +8,8 @@
 #ifndef TOP_HPP
 #define	TOP_HPP
 
-#include "types.h"
+#include "c_types.h"
+#include "forsyde_types.hpp"
 
 #include "read_bitmap.hpp"
 #include "jpeg_writer.hpp"
@@ -21,7 +22,7 @@ using namespace ForSyDe;
 using namespace ForSyDe::SDF;
 
 
-void read_bitmap_func(std::vector<bitmap_reader_out> &out, const std::vector<bitmap_reader_out> &inp1)
+void read_bitmap_func(tokens<bitmap_reader_out> &out, const tokens<bitmap_reader_out> &inp1)
 {
   //	std::cout << "read_bitmap_func" << std::endl;
   int current_block_id = inp1[0].block_id;
@@ -40,31 +41,27 @@ void read_bitmap_func(std::vector<bitmap_reader_out> &out, const std::vector<bit
 #pragma ForSyDe end
 }
 
-void rgb_block_collector_func(std::vector<rgb_collector_out_t> &out, const std::vector<bitmap_reader_out> &inp1)
+void rgb_block_collector_func(tokens<rgb_collector_out_t> &out, const tokens<bitmap_reader_out> &inp1)
 {
   //std::cout << "Block collector function" << std::endl;
-  std::vector<bitmap_reader_out> first_block;
-  std::vector<bitmap_reader_out> second_block;
-  std::vector<bitmap_reader_out> third_block;
-  std::vector<bitmap_reader_out> fourth_block;
+  out = init<bitmap_reader_out,bitmap_reader_out,bitmap_reader_out,bitmap_reader_out>(1, { 1 , 1 , 1, 1 }); 
+  
+  get<0,0,0>(out) = get<0>(inp1);
+  get<0,1,0>(out) = get<1>(inp1);
+  get<0,2,0>(out) = get<2>(inp1);
+  get<0,3,0>(out) = get<3>(inp1);
 
-  first_block.push_back(inp1[0]);
-  second_block.push_back(inp1[1]);
-  third_block.push_back(inp1[2]);
-  fourth_block.push_back(inp1[3]);
-
-  out[0] = std::make_tuple(first_block, second_block, third_block, fourth_block);
 }
 
 void write_jpeg_func(const encoded_block inp)
 {
-  //	std::cout << "write_jpeg_func" << std::endl;
-
+  
   block_out current_block = inp.current_block_data;
   int current_block_id = inp.block_id;
 
   int width = inp.width;
   int height = inp.height;
+
 
 #pragma ForSyDe begin WRITE_JPEG
   if (current_block_id == -1)
@@ -91,18 +88,15 @@ void write_jpeg_func(const encoded_block inp)
 
 void merge_and_write_blocks_func(const merge_blocks_in_t inp)
 {
-  encoded_block incoming_blocks[4];
+  encoded_block incoming_blocks[4]; 
 
-  incoming_blocks[0] = std::get < 0 > (inp)[0];
-  incoming_blocks[1] = std::get < 1 > (inp)[0];
-  incoming_blocks[2] = std::get < 2 > (inp)[0];
-  incoming_blocks[3] = std::get < 3 > (inp)[0];
+  incoming_blocks[0] = get < 0,0 > (inp);
+  incoming_blocks[1] = get < 1,0 > (inp);
+  incoming_blocks[2] = get < 2,0 > (inp);
+  incoming_blocks[3] = get < 3,0 > (inp);
 
-  int i;
-  for (i = 0; i < 4; ++i)
-    {
-      write_jpeg_func(incoming_blocks[i]);
-    }
+  for (int i = 0; i < 4; ++i) write_jpeg_func(incoming_blocks[i]);
+
 }
 
 SC_MODULE(Top)
@@ -118,7 +112,7 @@ SC_MODULE(Top)
   SDF2SDF<rgb_collector_out_t> rgb_collector_out;
 
   rgb_block_unzipper *unzip_blocks;
-  std::vector<unsigned int> rgb_block_unzipper_rates;
+  tokens<unsigned int> rgb_block_unzipper_rates;
 
   SDF2SDF<bitmap_reader_out> processing_in_1;
   SDF2SDF<bitmap_reader_out> processing_in_2;
@@ -133,7 +127,7 @@ SC_MODULE(Top)
   SDF2SDF<merge_blocks_in_t> block_merger_in;
 
   merge_blocks_zipper *zip_blocks;
-  std::vector<unsigned> zip_blocks_rates;
+  tokens<unsigned> zip_blocks_rates;
 
   SC_CTOR(Top)
   {
@@ -158,9 +152,7 @@ SC_MODULE(Top)
 
     ForSyDe::SDF::make_comb("rgb_block_collector", rgb_block_collector_func, 1, 4, rgb_collector_out, bitmap_reader_to_processing);
 
-    rgb_block_unzipper_rates =
-      {	1, 1, 1, 1};
-    unzip_blocks = new rgb_block_unzipper("rgb_blocks_unzipper", rgb_block_unzipper_rates);
+    unzip_blocks = new rgb_block_unzipper("rgb_blocks_unzipper", { 1, 1, 1, 1 });
     unzip_blocks->iport1(rgb_collector_out);
     std::get < 0 > (unzip_blocks->oport)(processing_in_1);
     std::get < 1 > (unzip_blocks->oport)(processing_in_2);
@@ -183,10 +175,7 @@ SC_MODULE(Top)
     block_processor_4->incoming_bitmap_block(processing_in_4);
     block_processor_4->outgoing_encoded_block(processing_to_writer_4);
 
-    zip_blocks_rates =
-      {	1, 1, 1, 1};
-
-    zip_blocks = new merge_blocks_zipper("block_zipper", zip_blocks_rates);
+    zip_blocks = new merge_blocks_zipper("block_zipper", { 1, 1, 1, 1 });
     std::get < 0 > (zip_blocks->iport)(processing_to_writer_1);
     std::get < 1 > (zip_blocks->iport)(processing_to_writer_2);
     std::get < 2 > (zip_blocks->iport)(processing_to_writer_3);

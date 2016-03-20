@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-#include "types.h"
+#include "c_types.h"
 	/* tables from JPEG standard
 	const unsigned char qtable_std_lum[8][8] =
 	{

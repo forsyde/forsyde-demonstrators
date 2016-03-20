@@ -9,7 +9,7 @@
 #define COLOR_CONVERSION_PROCESS_HPP_
 
 #include <forsyde.hpp>
-#include "types.h"
+#include "c_types.h"
 #include "subsample.hpp"
 
 

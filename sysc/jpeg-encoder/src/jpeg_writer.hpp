@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <cstring>
 
-#include "types.h"
+#include "c_types.h"
 #include "tables.h"
 
 unsigned int jpeg_out_file;

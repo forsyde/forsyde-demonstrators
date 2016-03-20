@@ -13,8 +13,9 @@
 #ifndef BLOCK_PROCESSOR_HPP_
 #define BLOCK_PROCESSOR_HPP_
 
-#include "types.h"
+#include "c_types.h"
 #include "tables.h"
+#include "forsyde_types.hpp"
 #include "process_block.hpp"
 
 #include <forsyde.hpp>
@@ -22,17 +23,17 @@
 using namespace ForSyDe;
 using namespace ForSyDe::SDF;
 
-void color_conversion_func(token_t<color_conversion_out_t> &out, const token_t<bitmap_reader_out> &inp1)
+void color_conversion_func(tokens<color_conversion_out_t> &out, const tokens<bitmap_reader_out> &inp1)
 {
-  auto current_color_block = inp1[0].color_block;
-  auto current_width = inp1[0].width;
-  auto current_height = inp1[0].height;
-  auto current_block_id = inp1[0].block_id;
+  out = init<smaller_block,smaller_block,smaller_block,smaller_block,smaller_block,smaller_block>(1, {1, 1, 1, 1, 1, 1});
+  auto current_color_block = get<0>(inp1).color_block;
+  auto current_width       = get<0>(inp1).width;
+  auto current_height      = get<0>(inp1).height;
+  auto current_block_id    = get<0>(inp1).block_id;
 
-  if (current_block_id != -1)
-    {
-      std::cout << "Processing block " << current_block_id << std::endl;
-    }
+  std::cout << "Processing block " << current_block_id << std::endl;
+
+#pragma ForSyDe begin color_conversion_func
 
   // four blocks of 8x8 Y
   smaller_block y_blocks[2][2];
@@ -52,8 +53,6 @@ void color_conversion_func(token_t<color_conversion_out_t> &out, const token_t<b
   cr_block.width = current_width;
   cr_block.height = current_height;
   cr_block.block_id = current_block_id;
-
-#pragma ForSyDe begin color_conversion_func
 
   unsigned int i, j, r, c;
 
@@ -110,31 +109,15 @@ void color_conversion_func(token_t<color_conversion_out_t> &out, const token_t<b
     }
 #pragma ForSyDe end
 
-  // I had trouble thinking of an uglier solution, but this will do!
-  token_t<smaller_block> y00_vector;
-  y00_vector.push_back(y_blocks[0][0]);
-
-  token_t<smaller_block> y01_vector;
-  y01_vector.push_back(y_blocks[0][1]);
-
-  token_t<smaller_block> y10_vector;
-  y10_vector.push_back(y_blocks[1][0]);
-
-  token_t<smaller_block> y11_vector;
-  y11_vector.push_back(y_blocks[1][1]);
-
-  token_t<smaller_block> cb_vector;
-  cb_vector.push_back(cb_block);
-
-  token_t<smaller_block> cr_vector;
-  cr_vector.push_back(cr_block);
-
-  // pack the six arrays into the out tuple of vectors
-  auto out_tuple = std::make_tuple(y00_vector, y01_vector, y10_vector, y11_vector, cb_vector, cr_vector);
-  out[0] = out_tuple;
+  get<0,0,0>(out) = y_blocks[0][0];
+  get<0,1,0>(out) = y_blocks[0][1];
+  get<0,2,0>(out) = y_blocks[1][0];
+  get<0,3,0>(out) = y_blocks[1][1];
+  get<0,4,0>(out) = cb_block;
+  get<0,5,0>(out) = cr_block;
 }
 
-void dct_func(token_t<smaller_block> &out, const token_t<smaller_block> &inp1)
+void dct_func(tokens<smaller_block> &out, const tokens<smaller_block> &inp1)
 {
   smaller_block out_block;
   // pass through all picture information to avoid having to create an extra channel for it
@@ -151,7 +134,7 @@ void dct_func(token_t<smaller_block> &out, const token_t<smaller_block> &inp1)
   out[0] = out_block;
 }
 
-void huffman_encode_func(token_t<huffman_encoding_out> &out, const token_t<smaller_block> &inp1)
+void huffman_encode_func(tokens<huffman_encoding_out> &out, const tokens<smaller_block> &inp1)
 {
   huffman_encoding_out huffman_step_out;
 
@@ -181,44 +164,46 @@ void huffman_encode_func(token_t<huffman_encoding_out> &out, const token_t<small
   out[0] = huffman_step_out;
 }
 
-void concatenate_steps_func(token_t<encoded_block> &out, const token_t<concatenate_smaller_blocks_in_t> &inp1)
+void concatenate_steps_func(tokens<encoded_block> &out, const tokens<concatenate_smaller_blocks_in_t> &inp1)
 {
-  encoded_block out_block;
+  out = tokens<encoded_block>(1);
+  huffman_encoding_out in_tup0 = get<0,0,0>(inp1);
+  huffman_encoding_out in_tup1 = get<0,1,0>(inp1);
+  huffman_encoding_out in_tup2 = get<0,2,0>(inp1);
+  huffman_encoding_out in_tup3 = get<0,3,0>(inp1);
+  huffman_encoding_out in_tup4 = get<0,4,0>(inp1);
+  huffman_encoding_out in_tup5 = get<0,5,0>(inp1);
 
+#pragma ForSyDe begin concatenate_steps_func
+
+  encoded_block out_block;
   block_out* current_block_out = &(out_block.current_block_data);
   init_block_out(current_block_out);
 
-  concatenate_smaller_blocks_in_t incoming_tuple = inp1[0];
-  huffman_encoding_out huffman_out;
-
-#pragma ForSyDe begin concatenate_steps_func
   // collect all six huffman steps and concatenate them to a complete block out
   // Y[0][0]
-  huffman_out = (std::get < 0 > (incoming_tuple))[0];
-  write_block_out(current_block_out, &huffman_out);
+  write_block_out(current_block_out, &in_tup0);
   // Y[0][1]
-  huffman_out = (std::get < 1 > (incoming_tuple))[0];
-  write_block_out(current_block_out, &huffman_out);
+  write_block_out(current_block_out, &in_tup1);
   // Y[1][0]
-  huffman_out = (std::get < 2 > (incoming_tuple))[0];
-  write_block_out(current_block_out, &huffman_out);
+  write_block_out(current_block_out, &in_tup2);
   // Y[1][1]
-  huffman_out = (std::get < 3 > (incoming_tuple))[0];
-  write_block_out(current_block_out, &huffman_out);
+  write_block_out(current_block_out, &in_tup3);
   // Cb
-  huffman_out = (std::get < 4 > (incoming_tuple))[0];
-  write_block_out(current_block_out, &huffman_out);
+  write_block_out(current_block_out, &in_tup4);
   // Cr
-  huffman_out = (std::get < 5 > (incoming_tuple))[0];
-  write_block_out(current_block_out, &huffman_out);
-#pragma ForSyDe end
+  write_block_out(current_block_out, &in_tup5);
 
   // just get the information through to the JPEG writer
-  out_block.block_id = huffman_out.block_id;
-  out_block.height = huffman_out.height;
-  out_block.width = huffman_out.width;
+  out_block.block_id = in_tup5.block_id;
+  out_block.height = in_tup5.height;
+  out_block.width = in_tup5.width;
+  
+#pragma ForSyDe end
 
   out[0] = out_block;
+  //std::cout << get<0>(out).block_id << ", " << get<0>(out).height << ", " << get<0>(out).width << std::endl;
+
 }
 
 SC_MODULE(block_processor)
@@ -257,10 +242,7 @@ SC_MODULE(block_processor)
   {
     make_comb("color_conversion", color_conversion_func, 1, 1, color_conversion_out, incoming_bitmap_block);
 
-    token_t<unsigned int> unzip_blocks_rates =
-      { 1, 1, 1, 1, 1, 1 };
-
-    auto unzip_blocks = new block_unzipper("block_unzipper", unzip_blocks_rates);
+    auto unzip_blocks = new block_unzipper("block_unzipper", { 1, 1, 1, 1, 1, 1 });
     unzip_blocks->iport1(color_conversion_out);
     std::get < 0 > (unzip_blocks->oport)(cc_to_dct_1);
     std::get < 1 > (unzip_blocks->oport)(cc_to_dct_2);
@@ -283,10 +265,7 @@ SC_MODULE(block_processor)
     make_comb("huffman_encode10", huffman_encode_func, 1, 1, huffman_to_conc_5, dct_to_huffman_5);
     make_comb("huffman_encode11", huffman_encode_func, 1, 1, huffman_to_conc_6, dct_to_huffman_6);
 
-    std::vector<unsigned> zip_blocks_rates =
-      { 1, 1, 1, 1, 1, 1 };
-
-    auto zip_blocks = new encoded_blocks_zipper("block_zipper", zip_blocks_rates);
+    auto zip_blocks = new encoded_blocks_zipper("block_zipper", { 1, 1, 1, 1, 1, 1 });
     std::get < 0 > (zip_blocks->iport)(huffman_to_conc_1);
     std::get < 1 > (zip_blocks->iport)(huffman_to_conc_2);
     std::get < 2 > (zip_blocks->iport)(huffman_to_conc_3);

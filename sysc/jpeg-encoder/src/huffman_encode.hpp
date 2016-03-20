@@ -8,7 +8,7 @@
 #ifndef HUFFMAN_ENCODE_HPP
 #define	HUFFMAN_ENCODE_HPP
 
-#include "types.h"
+#include "c_types.h"
 #include "tables.h"
 //#include "process_block.hpp"
 
