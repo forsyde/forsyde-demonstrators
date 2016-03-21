@@ -46,11 +46,10 @@ void rgb_block_collector_func(tokens<rgb_collector_out_t> &out, const tokens<bit
   //std::cout << "Block collector function" << std::endl;
   out = init<bitmap_reader_out,bitmap_reader_out,bitmap_reader_out,bitmap_reader_out>(1, { 1 , 1 , 1, 1 }); 
   
-  get<0,0,0>(out) = get<0>(inp1);
-  get<0,1,0>(out) = get<1>(inp1);
-  get<0,2,0>(out) = get<2>(inp1);
-  get<0,3,0>(out) = get<3>(inp1);
-
+  *get<bitmap_reader_out, 0,0,0>(out) = *get<bitmap_reader_out, 0>(inp1);
+  *get<bitmap_reader_out, 0,1,0>(out) = *get<bitmap_reader_out, 1>(inp1);
+  *get<bitmap_reader_out, 0,2,0>(out) = *get<bitmap_reader_out, 2>(inp1);
+  *get<bitmap_reader_out, 0,3,0>(out) = *get<bitmap_reader_out, 3>(inp1);
 }
 
 void write_jpeg_func(const encoded_block inp)
@@ -86,17 +85,19 @@ void write_jpeg_func(const encoded_block inp)
 
 }
 
-void merge_and_write_blocks_func(const merge_blocks_in_t inp)
+
+void merge_blocks_func(tokens<encoded_block>& out, const tokens<merge_blocks_in_t>& inp)
 {
-  encoded_block incoming_blocks[4]; 
+  out.resize(4);
+  *get<encoded_block, 0>(out) = *get<encoded_block, 0,0,0> (inp);
+  *get<encoded_block, 1>(out) = *get<encoded_block, 0,1,0> (inp);
+  *get<encoded_block, 2>(out) = *get<encoded_block, 0,2,0> (inp);
+  *get<encoded_block, 3>(out) = *get<encoded_block, 0,3,0> (inp);
+}
 
-  incoming_blocks[0] = get < 0,0 > (inp);
-  incoming_blocks[1] = get < 1,0 > (inp);
-  incoming_blocks[2] = get < 2,0 > (inp);
-  incoming_blocks[3] = get < 3,0 > (inp);
-
-  for (int i = 0; i < 4; ++i) write_jpeg_func(incoming_blocks[i]);
-
+void write_blocks_func(const encoded_block inp)
+{
+  write_jpeg_func(inp);
 }
 
 SC_MODULE(Top)
@@ -125,6 +126,7 @@ SC_MODULE(Top)
   SDF2SDF<encoded_block> processing_to_writer_4;
 
   SDF2SDF<merge_blocks_in_t> block_merger_in;
+  SDF2SDF<encoded_block> block_merger_out;
 
   merge_blocks_zipper *zip_blocks;
   tokens<unsigned> zip_blocks_rates;
@@ -182,9 +184,11 @@ SC_MODULE(Top)
     std::get < 3 > (zip_blocks->iport)(processing_to_writer_4);
     zip_blocks->oport1(block_merger_in);
 
-    ForSyDe::SDF::make_sink("merge_and_write_blocks", // Name
-			    merge_and_write_blocks_func, // Function to invoke
-			    block_merger_in // Signal to report
+    ForSyDe::SDF::make_comb("merge_blocks", merge_blocks_func, 4, 1, block_merger_out, block_merger_in);
+
+    ForSyDe::SDF::make_sink("write_blocks", // Name
+			    write_blocks_func, // Function to invoke
+			    block_merger_out // Signal to report
 			    );
 
   }

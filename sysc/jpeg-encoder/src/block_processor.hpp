@@ -26,10 +26,10 @@ using namespace ForSyDe::SDF;
 void color_conversion_func(tokens<color_conversion_out_t> &out, const tokens<bitmap_reader_out> &inp1)
 {
   out = init<smaller_block,smaller_block,smaller_block,smaller_block,smaller_block,smaller_block>(1, {1, 1, 1, 1, 1, 1});
-  auto current_color_block = get<0>(inp1).color_block;
-  auto current_width       = get<0>(inp1).width;
-  auto current_height      = get<0>(inp1).height;
-  auto current_block_id    = get<0>(inp1).block_id;
+  auto current_color_block = get<bitmap_reader_out, 0>(inp1)->color_block;
+  auto current_width       = get<bitmap_reader_out, 0>(inp1)->width;
+  auto current_height      = get<bitmap_reader_out, 0>(inp1)->height;
+  auto current_block_id    = get<bitmap_reader_out, 0>(inp1)->block_id;
 
   std::cout << "Processing block " << current_block_id << std::endl;
 
@@ -109,12 +109,12 @@ void color_conversion_func(tokens<color_conversion_out_t> &out, const tokens<bit
     }
 #pragma ForSyDe end
 
-  get<0,0,0>(out) = y_blocks[0][0];
-  get<0,1,0>(out) = y_blocks[0][1];
-  get<0,2,0>(out) = y_blocks[1][0];
-  get<0,3,0>(out) = y_blocks[1][1];
-  get<0,4,0>(out) = cb_block;
-  get<0,5,0>(out) = cr_block;
+  *get<smaller_block, 0,0,0>(out) = y_blocks[0][0];
+  *get<smaller_block, 0,1,0>(out) = y_blocks[0][1];
+  *get<smaller_block, 0,2,0>(out) = y_blocks[1][0];
+  *get<smaller_block, 0,3,0>(out) = y_blocks[1][1];
+  *get<smaller_block, 0,4,0>(out) = cb_block;
+  *get<smaller_block, 0,5,0>(out) = cr_block;
 }
 
 void dct_func(tokens<smaller_block> &out, const tokens<smaller_block> &inp1)
@@ -167,12 +167,12 @@ void huffman_encode_func(tokens<huffman_encoding_out> &out, const tokens<smaller
 void concatenate_steps_func(tokens<encoded_block> &out, const tokens<concatenate_smaller_blocks_in_t> &inp1)
 {
   out = tokens<encoded_block>(1);
-  huffman_encoding_out in_tup0 = get<0,0,0>(inp1);
-  huffman_encoding_out in_tup1 = get<0,1,0>(inp1);
-  huffman_encoding_out in_tup2 = get<0,2,0>(inp1);
-  huffman_encoding_out in_tup3 = get<0,3,0>(inp1);
-  huffman_encoding_out in_tup4 = get<0,4,0>(inp1);
-  huffman_encoding_out in_tup5 = get<0,5,0>(inp1);
+  huffman_encoding_out in_tup0 = *get<huffman_encoding_out, 0,0,0>(inp1);
+  huffman_encoding_out in_tup1 = *get<huffman_encoding_out, 0,1,0>(inp1);
+  huffman_encoding_out in_tup2 = *get<huffman_encoding_out, 0,2,0>(inp1);
+  huffman_encoding_out in_tup3 = *get<huffman_encoding_out, 0,3,0>(inp1);
+  huffman_encoding_out in_tup4 = *get<huffman_encoding_out, 0,4,0>(inp1);
+  huffman_encoding_out in_tup5 = *get<huffman_encoding_out, 0,5,0>(inp1);
 
 #pragma ForSyDe begin concatenate_steps_func
 
