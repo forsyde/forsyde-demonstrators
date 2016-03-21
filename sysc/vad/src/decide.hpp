@@ -19,9 +19,9 @@
 
 using namespace ForSyDe::SDF;
 
-void decide_func(token_t<short>& out,
-		 token_t<Pfloat> inp1,
-		 token_t<Pfloat> inp2)
+void decide_func(tokens<short>& out,
+		 tokens<Pfloat> inp1,
+		 tokens<Pfloat> inp2)
 {
   // Resize all the vectors to contain 1 element
   out.resize(1);

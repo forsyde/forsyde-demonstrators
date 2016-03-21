@@ -27,7 +27,7 @@
 
 using namespace ForSyDe;
 
-token_t<int> test;
+tokens<int> test;
 
 SC_MODULE(top)
 {
@@ -39,25 +39,25 @@ SC_MODULE(top)
   SDF::signal<Pfloat> e8, e10;
   SDF::signal<r_t> e12, e13, e14;
   SDF::signal<rc_t> e17;
-  SDF::signal<token_tuple_t<L_av_t,L_av_t>> e1_2;
-  SDF::signal<token_tuple_t<rav1_t,short,pvad_acf0_t,short,short>> e4_5_6_9_18;
-  SDF::signal<token_tuple_t<pvad_acf0_t,Pfloat>> e6_8;
-  SDF::signal<token_tuple_t<rvad_t,Pfloat>> e7_10;
-  SDF::signal<token_tuple_t<r_t,r_t,r_t,short,short,rc_t,short>> e12_13_14_15_16_17_18;
+  SDF::signal<token_tuple<L_av_t,L_av_t>> e1_2;
+  SDF::signal<token_tuple<rav1_t,short,pvad_acf0_t,short,short>> e4_5_6_9_18;
+  SDF::signal<token_tuple<pvad_acf0_t,Pfloat>> e6_8;
+  SDF::signal<token_tuple<rvad_t,Pfloat>> e7_10;
+  SDF::signal<token_tuple<r_t,r_t,r_t,short,short,rc_t,short>> e12_13_14_15_16_17_18;
     
   SC_CTOR(top)
   {
     SDF::make_file_source("vadSource1", vadSource_func, "files/source_data.txt", e12_13_14_15_16_17_18);
         
     auto vadSource1_unzip = new SDF::unzipN<r_t,r_t,r_t,short,short,rc_t,short>("vadSource1_unzip", {1,1,1,1,1,1,1});
-      vadSource1_unzip->iport1(e12_13_14_15_16_17_18);
-      std::get<0>(vadSource1_unzip->oport)(e12);
-      std::get<1>(vadSource1_unzip->oport)(e13);
-      std::get<2>(vadSource1_unzip->oport)(e14);
-      std::get<3>(vadSource1_unzip->oport)(e15);
-      std::get<4>(vadSource1_unzip->oport)(e16);
-      std::get<5>(vadSource1_unzip->oport)(e17);
-      std::get<6>(vadSource1_unzip->oport)(e18);        
+    vadSource1_unzip->iport1(e12_13_14_15_16_17_18);
+    std::get<0>(vadSource1_unzip->oport)(e12);
+    std::get<1>(vadSource1_unzip->oport)(e13);
+    std::get<2>(vadSource1_unzip->oport)(e14);
+    std::get<3>(vadSource1_unzip->oport)(e15);
+    std::get<4>(vadSource1_unzip->oport)(e16);
+    std::get<5>(vadSource1_unzip->oport)(e17);
+    std::get<6>(vadSource1_unzip->oport)(e18);        
         
     SDF::make_comb("toneDetect1", toneDetect_func, 1, 1, e9, e17);
         
@@ -74,12 +74,12 @@ SC_MODULE(top)
     //~ SDF::make_comb5("thrAdp1", thrAdp_func, , , , e7_10, e4, e5, e6, e9, e18);
 
     auto thrAdp1_zip = new SDF::zipN<rav1_t,short,pvad_acf0_t,short,short>("thrAdp1_zip", {1,1,1,1,1});
-      thrAdp1_zip->oport1(e4_5_6_9_18);
-      std::get<0>(thrAdp1_zip->iport)(e4);
-      std::get<1>(thrAdp1_zip->iport)(e5);
-      std::get<2>(thrAdp1_zip->iport)(e6);
-      std::get<3>(thrAdp1_zip->iport)(e9);
-      std::get<4>(thrAdp1_zip->iport)(e18);
+    thrAdp1_zip->oport1(e4_5_6_9_18);
+    std::get<0>(thrAdp1_zip->iport)(e4);
+    std::get<1>(thrAdp1_zip->iport)(e5);
+    std::get<2>(thrAdp1_zip->iport)(e6);
+    std::get<3>(thrAdp1_zip->iport)(e9);
+    std::get<4>(thrAdp1_zip->iport)(e18);
 	
     SDF::make_comb("thrAdp1", thrAdp_func, 1, 1, e7_10, e4_5_6_9_18);
 	

@@ -19,7 +19,7 @@
 
 using namespace ForSyDe::SDF;
 
-void hangover_func(token_t<short>& out, token_t<short> inp1)
+void hangover_func(tokens<short>& out, tokens<short> inp1)
 {
     // Resize all the vectors to contain 1 element
     out.resize(1);

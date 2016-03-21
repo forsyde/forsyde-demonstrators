@@ -19,9 +19,9 @@
 
 using namespace ForSyDe::SDF;
 
-void specComp_func(token_t<short>& out,
-                            token_t<L_av_t> inp1,
-                            token_t<rav1_t> inp2)
+void specComp_func(tokens<short>& out,
+                            tokens<L_av_t> inp1,
+                            tokens<rav1_t> inp2)
 {
     // Resize all the vectors to contain 1 element
     // TODO: Generalize
