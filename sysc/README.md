@@ -4,6 +4,6 @@
 
 | Application  | Compiles | Runs | Valid | SysC-perf | Plot | SDF3 | DSE | Maps on |
 | ------------ |:--------:|:----:|:-----:|:---------:|:----:|:----:|:---:| ------- | 
-| vad          | Yes      | Yes  | ?     | Yes       | Yes  | Yes  | ?   | ?       |
-| jpeg-encoder | Yes      | Yes  | Yes   | Yes       | Yes  | Yes  | ?   | ?       |
-| mp3-decoder  | Yes      | Yes  | Yes   | Yes       | Yes  | Yes  | ?   | ?       |
+| vad          | Yes      | Yes  | ?     | ?       | Yes  | ?  | ?   | ?       |
+| jpeg-encoder | Yes      | Yes  | Yes   | ?       | Yes  | ?  | ?   | ?       |
+| mp3-decoder  | Yes      | Yes  | Yes   | ?       | Yes  | ?  | ?   | ?       |
