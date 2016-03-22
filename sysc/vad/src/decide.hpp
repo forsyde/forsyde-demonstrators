@@ -17,6 +17,7 @@
 #include <forsyde.hpp>
 #include "includes/vad.h"
 
+using namespace ForSyDe;
 using namespace ForSyDe::SDF;
 
 void decide_func(tokens<short>& out,
@@ -26,8 +27,8 @@ void decide_func(tokens<short>& out,
   // Resize all the vectors to contain 1 element
   out.resize(1);
     
-  Pfloat* in_pvad = &inp1[0];
-  Pfloat* in_thvad = &inp2[0];
+  Pfloat* in_pvad  = &get<0>(inp1);
+  Pfloat* in_thvad = &get<0>(inp2);
   short out_vvad;
 #pragma ForSyDe begin decide_func
     

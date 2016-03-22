@@ -17,6 +17,7 @@
 #include <forsyde.hpp>
 #include "includes/vad.h"
 
+using namespace ForSyDe;
 using namespace ForSyDe::SDF;
 
 void hangover_func(tokens<short>& out, tokens<short> inp1)

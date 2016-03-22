@@ -17,6 +17,7 @@
 #include <forsyde.hpp>
 #include "includes/vad.h"
 
+using namespace ForSyDe;
 using namespace ForSyDe::SDF;
 
 void acfAvg_func(tokens<token_tuple<L_av_t,L_av_t>>& out,
@@ -26,11 +27,11 @@ void acfAvg_func(tokens<token_tuple<L_av_t,L_av_t>>& out,
 {
     // Resize all the vectors to contain 1 element
   out = init<L_av_t,L_av_t>(1, {1, 1});
-  short* in_r_h     = inp1[0].data();
-  short* in_r_l     = inp2[0].data();
-  short in_scal_acf = inp3[0];
-  short* tout_L_av0 = get<0,0,0>(out).data();
-  short* tout_L_av1 = get<0,1,0>(out).data();
+  short* in_r_h     = &get<0>(inp1);
+  short* in_r_l     = &get<0>(inp2);
+  short in_scal_acf =  get<0>(inp3);
+  short* tout_L_av0 = &get<0,0,0>(out);
+  short* tout_L_av1 = &get<0,1,0>(out);
 
 #pragma ForSyDe begin acfAvg_func
   int out_L_av0[9];

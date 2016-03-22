@@ -17,6 +17,7 @@
 #include <forsyde.hpp>
 #include "includes/vad.h"
 
+using namespace ForSyDe;
 using namespace ForSyDe::SDF;
 
 void engComp_func(tokens<token_tuple<pvad_acf0_t,Pfloat>>& out,
@@ -27,13 +28,14 @@ void engComp_func(tokens<token_tuple<pvad_acf0_t,Pfloat>>& out,
   // Resize all the vectors to contain 1 element
   out = init<pvad_acf0_t,Pfloat>(1, {1, 1});
     
-  short* in_rvad_buff = std::get<0>(inp1[0]).data();
-  short in_rvad_scal  = std::get<1>(inp1[0]);
-  short* in_r_h       = inp2[0].data();
-  short in_scal_acf   = inp3[0];
+  short* in_rvad_buff = &get<0,0>(inp1);
+  short in_rvad_scal  =  get<0,1>(inp1);
+  short* in_r_h       = &get<0>(inp2);
+  short in_scal_acf   =  get<0>(inp3);
     
-  Pfloat* val_pvad = &std::get<0>(get<0,0,0>(out));
-  Pfloat* val_acf0 = &std::get<1>(get<0,0,0>(out));  
+  Pfloat* val_pvad = &get<0,0,0,0>(out);
+  Pfloat* val_acf0 = &get<0,0,0,1>(out);  
+
 #pragma ForSyDe begin acfAvg_func
     
   energy_computation(

@@ -17,6 +17,7 @@
 #include <forsyde.hpp>
 #include <src/includes/vad.h>
 
+using namespace ForSyDe;
 using namespace ForSyDe::SDF;
 
 void predVal_func(tokens<rav1_t>& out,
@@ -25,8 +26,9 @@ void predVal_func(tokens<rav1_t>& out,
   // Resize all the vectors to contain 1 element
   out = init<rav1_t>(1);
 
-  short* out_rav_buff = std::get<0>(out[0]).data();
-  short* out_rav_scal = &std::get<1>(out[0]);
+  short* out_rav_buff = &get<0,0>(out);
+  short* out_rav_scal = &get<0,1>(out);
+
 #pragma ForSyDe begin predVal_func
     
   int in_L_av[9];

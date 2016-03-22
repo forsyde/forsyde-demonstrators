@@ -17,6 +17,7 @@
 #include <forsyde.hpp>
 #include <iostream>
 
+using namespace ForSyDe;
 using namespace ForSyDe::SDF;
 
 void vadSink_func(std::string& line, const short& out)

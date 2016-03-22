@@ -17,6 +17,7 @@
 #include <forsyde.hpp>
 #include "includes/vad.h"
 
+using namespace ForSyDe;
 using namespace ForSyDe::SDF;
 
 void thrAdp_func(tokens<token_tuple<rvad_t,Pfloat>>& out,
@@ -25,17 +26,17 @@ void thrAdp_func(tokens<token_tuple<rvad_t,Pfloat>>& out,
   // Resize all the output vectors to contain 1 element
   out = init<rvad_t,Pfloat>(1, {1, 1});
     
-  short* in_rav_buff  = std::get<0>(get<0,0,0>(inp1)).data();
-  short in_rav_scal   = std::get<1>(get<0,0,0>(inp1));
-  short in_stat       = get<0,1,0>(inp1);
-  Pfloat in_pvad_pvad = std::get<0>(get<0,2,0>(inp1));
-  Pfloat in_pvad_acf0 = std::get<1>(get<0,2,0>(inp1));
-  short in_tone       = get<0,3,0>(inp1);
-  short in_ptch       = get<0,4,0>(inp1);
+  short* in_rav_buff  = &get<0,0,0,0>(inp1);
+  short in_rav_scal   =  get<0,0,0,1>(inp1);
+  short in_stat       =  get<0,1,0  >(inp1);
+  Pfloat in_pvad_pvad =  get<0,2,0,0>(inp1);
+  Pfloat in_pvad_acf0 =  get<0,2,0,1>(inp1);
+  short in_tone       =  get<0,3,0  >(inp1);
+  short in_ptch       =  get<0,4,0  >(inp1);
     
-  short* out_rvad_buff = std::get<0>(get<0,0,0>(out)).data();
-  short* out_rvad_scal = &std::get<1>(get<0,0,0>(out));
-  Pfloat* out_thvad    = get<0,1>(out);
+  short* out_rvad_buff = &get<0,0,0,0>(out);
+  short* out_rvad_scal = &get<0,0,0,1>(out);
+  Pfloat* out_thvad    = &get<0,1    >(out);
     
 #pragma ForSyDe begin thrAdp_func
 
