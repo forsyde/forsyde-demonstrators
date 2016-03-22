@@ -5,21 +5,26 @@
 #include "include/MP3Decoder.h"
 #include "include/MP3Decoder_types.hpp"
 
-using namespace std;
+using namespace ForSyDe;
+using namespace ForSyDe::SDF;
 
 void ReadBitstreamAndExtractFrames_func(
-    token_t<InputType>& outs,
-    const token_t<float>& inp1)
+    tokens<InputType>& outs,
+    const tokens<float>& inp)
 {
-    token_t<float>               out1(1);    // dummyCounter
-    token_t<bool>                out2(1);    // lastFrame
-    token_t<FrameHeader>         out3(1);    // headerMerge
-    token_t<FrameHeader>         out4(1);    // headerGranule0
-    token_t<FrameSideInfo>       out5(1);    // sideInfoGranule0
-    token_t<GranuleData>         out6(1);    // granuleData0
-    token_t<FrameHeader>         out7(1);    // headerGranule1
-    token_t<FrameSideInfo>       out8(1);    // sideInfoGranule1
-    token_t<GranuleData>         out9(1);    // granuleData1
+  outs = init<float,char,FrameHeader,FrameHeader,FrameSideInfo,GranuleData,FrameHeader,FrameSideInfo,GranuleData>
+    (1, {1,1,1,1,1,1,1,1,1});
+    
+    float*         out1 = &get<0,0,0>(outs);    // dummyCounter
+    char*          out2 = &get<0,1,0>(outs);    // lastFrame
+    FrameHeader*   out3 = &get<0,2,0>(outs);    // headerMerge
+    FrameHeader*   out4 = &get<0,3,0>(outs);    // headerGranule0
+    FrameSideInfo* out5 = &get<0,4,0>(outs);    // sideInfoGranule0
+    GranuleData*   out6 = &get<0,5,0>(outs);    // granuleData0
+    FrameHeader*   out7 = &get<0,6,0>(outs);    // headerGranule1
+    FrameSideInfo* out8 = &get<0,7,0>(outs);    // sideInfoGranule1
+    GranuleData*   out9 = &get<0,8,0>(outs);    // granuleData1
+
 
 #pragma ForSyDe begin ReadBitstreamAndExtractFrames_func
     /* User-defined local variables */
@@ -27,7 +32,7 @@ void ReadBitstreamAndExtractFrames_func(
     static FrameHeader header;
     static FrameSideInfo sideInfo = {0};
     static FrameMainData frameMainData;
-    bool moreFrames = true;
+    char moreFrames = true;
 
     /* Main actor code */
 
@@ -46,7 +51,6 @@ void ReadBitstreamAndExtractFrames_func(
     copyGranuleData(frameMainData, 1, out9[0]);
 
 #pragma ForSyDe end
-    outs[0] = make_tuple(out1,out2,out3,out4,out5,out6,out7,out8,out9);
 }
 
 #endif

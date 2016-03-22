@@ -18,110 +18,109 @@ SC_MODULE(Top)
 public:
     /* Actors */
     ReadBitstreamAndExtractFrames *a_ReadBitstreamAndExtractFrames;
-    InputUnzipper *a_InputUnzipper;
-    delayn<float> *a_DummyLoopDelay;
-    ProcessChanule *a_ProcessChanule0Left;
-    MergeZipper *a_MergeZipper;
-    Merge *a_Merge;
-    ProcessGranule *a_ProcessGranule0, *a_ProcessGranule1;
-    GranuelUnzipper *a_Granuel0Unzipper, *a_Granuel1Unzipper;
-    ProcessChanule *a_ProcessChanule0Right;
-    ProcessChanule *a_ProcessChanule1Right;
-    ProcessChanule *a_ProcessChanule1Left;
-    ChanuleUnzipper *a_Chanule0LUnzipper, *a_Chanule0RUnzipper,
-                    *a_Chanule1LUnzipper, *a_Chanule1RUnzipper;
-    delayn<VecType> *a_ch_1r_0r, *a_ch_1l_0l;
+    InputUnzipper	*a_InputUnzipper;
+    delayn<float>	*a_DummyLoopDelay;
+    ProcessChanule	*a_ProcessChanule0Left;
+    MergeZipper		*a_MergeZipper;
+    Merge		*a_Merge;
+    ProcessGranule	*a_ProcessGranule0, *a_ProcessGranule1;
+    GranuelUnzipper	*a_Granuel0Unzipper, *a_Granuel1Unzipper;
+    ProcessChanule	*a_ProcessChanule0Right;
+    ProcessChanule	*a_ProcessChanule1Right;
+    ProcessChanule	*a_ProcessChanule1Left;
+    ChanuleUnzipper	*a_Chanule0LUnzipper, *a_Chanule0RUnzipper,
+			*a_Chanule1LUnzipper, *a_Chanule1RUnzipper;
+    delayn<VecType>	*a_ch_1r_0r, *a_ch_1l_0l;
 
     /* Channels */
-    SDF2SDF<float> *dummyloopi;
-    SDF2SDF<float> *dummyloopo;
-    SDF2SDF<InputType> *zippedInput;
-    SDF2SDF<bool> *lastFrame;
-    SDF2SDF<FrameHeader> *headerGranule0;
-    SDF2SDF<FrameHeader> *headerGranule1;
-    SDF2SDF<FrameSideInfo> *sideInfoGranule0;
-    SDF2SDF<FrameSideInfo> *sideInfoGranule1;
-    SDF2SDF<GranuleData> *granuleData0;
-    SDF2SDF<GranuleData> *granuleData1;
-    SDF2SDF<GranuleType> *zippedGranuel0Out;
-    SDF2SDF<GranuleType> *zippedGranuel1Out;
-    SDF2SDF<FrameHeader> *headerMerge;
-    SDF2SDF<FrameHeader> *headerChanule0Left;
-    SDF2SDF<FrameHeader> *headerChanule0Right;
-    SDF2SDF<FrameSideInfo> *sideInfoChanule0Left;
-    SDF2SDF<FrameSideInfo> *sideInfoChanule0Right;
-    SDF2SDF<ChanuleData> *chanuleData0Left;
-    SDF2SDF<ChanuleData> *chanuleData0Right;
-    SDF2SDF<FrameHeader> *headerChanule1Left;
-    SDF2SDF<FrameHeader> *headerChanule1Right;
-    SDF2SDF<FrameSideInfo> *sideInfoChanule1Left;
-    SDF2SDF<FrameSideInfo> *sideInfoChanule1Right;
-    SDF2SDF<ChanuleData> *chanuleData1Left;
-    SDF2SDF<ChanuleData> *chanuleData1Right;
-    SDF2SDF<ChanuleType> *zippedChanule0LOut;
-    SDF2SDF<ChanuleType> *zippedChanule0ROut;
-    SDF2SDF<ChanuleType> *zippedChanule1LOut;
-    SDF2SDF<ChanuleType> *zippedChanule1ROut;
-    SDF2SDF<ChanuleSamples> *samples_0_Left;
-    SDF2SDF<ChanuleSamples> *samples_0_Right;
-    SDF2SDF<ChanuleSamples> *samples_1_Left;
-    SDF2SDF<ChanuleSamples> *samples_1_Right;
-    SDF2SDF<VecType> *sync_0l_1l;
-    SDF2SDF<VecType> *sync_0r_1r;
-    SDF2SDF<VecType> *sync_1r_0r_predel, *sync_1r_0r_aftdel;
-    SDF2SDF<VecType> *sync_1l_0l_predel, *sync_1l_0l_aftdel;
-    SDF2SDF<MergeType> *zippedMerge;
+    SDF2SDF<float>		*dummyloopi;
+    SDF2SDF<float>		*dummyloopo;
+    SDF2SDF<InputType>		*zippedInput;
+    SDF2SDF<char>		*lastFrame;
+    SDF2SDF<FrameHeader>	*headerGranule0;
+    SDF2SDF<FrameHeader>	*headerGranule1;
+    SDF2SDF<FrameSideInfo>	*sideInfoGranule0;
+    SDF2SDF<FrameSideInfo>	*sideInfoGranule1;
+    SDF2SDF<GranuleData>	*granuleData0;
+    SDF2SDF<GranuleData>	*granuleData1;
+    SDF2SDF<GranuleType>	*zippedGranuel0Out;
+    SDF2SDF<GranuleType>	*zippedGranuel1Out;
+    SDF2SDF<FrameHeader>	*headerMerge;
+    SDF2SDF<FrameHeader>	*headerChanule0Left;
+    SDF2SDF<FrameHeader>	*headerChanule0Right;
+    SDF2SDF<FrameSideInfo>	*sideInfoChanule0Left;
+    SDF2SDF<FrameSideInfo>	*sideInfoChanule0Right;
+    SDF2SDF<ChanuleData>	*chanuleData0Left;
+    SDF2SDF<ChanuleData>	*chanuleData0Right;
+    SDF2SDF<FrameHeader>	*headerChanule1Left;
+    SDF2SDF<FrameHeader>	*headerChanule1Right;
+    SDF2SDF<FrameSideInfo>	*sideInfoChanule1Left;
+    SDF2SDF<FrameSideInfo>	*sideInfoChanule1Right;
+    SDF2SDF<ChanuleData>	*chanuleData1Left;
+    SDF2SDF<ChanuleData>	*chanuleData1Right;
+    SDF2SDF<ChanuleType>	*zippedChanule0LOut;
+    SDF2SDF<ChanuleType>	*zippedChanule0ROut;
+    SDF2SDF<ChanuleType>	*zippedChanule1LOut;
+    SDF2SDF<ChanuleType>	*zippedChanule1ROut;
+    SDF2SDF<ChanuleSamples>	*samples_0_Left;
+    SDF2SDF<ChanuleSamples>	*samples_0_Right;
+    SDF2SDF<ChanuleSamples>	*samples_1_Left;
+    SDF2SDF<ChanuleSamples>	*samples_1_Right;
+    SDF2SDF<VecType>		*sync_0l_1l;
+    SDF2SDF<VecType>		*sync_0r_1r;
+    SDF2SDF<VecType>		*sync_1r_0r_predel, *sync_1r_0r_aftdel;
+    SDF2SDF<VecType>		*sync_1l_0l_predel, *sync_1l_0l_aftdel;
+    SDF2SDF<MergeType>		*zippedMerge;
 
     SC_CTOR(Top)
     {
         /* Create FIFOs */
-        dummyloopi = new SDF2SDF<float>("dummyloopi",1);
-        dummyloopo = new SDF2SDF<float>("dummyloopo",1);
-        zippedInput = new SDF2SDF<InputType>("zippedInput",1);
-        lastFrame = new SDF2SDF<bool>("lastFrame",1);
-        headerGranule0 = new SDF2SDF<FrameHeader>("headerGranule0",1);
-        headerGranule1 = new SDF2SDF<FrameHeader>("headerGranule1",1);
-        sideInfoGranule0 = new SDF2SDF<FrameSideInfo>("sideInfoGranule0",1);
-        sideInfoGranule1 = new SDF2SDF<FrameSideInfo>("sideInfoGranule1",1);
-        granuleData0 = new SDF2SDF<GranuleData>("granuleData0",1);
-        granuleData1 = new SDF2SDF<GranuleData>("granuleData1",1);
-        zippedGranuel0Out = new SDF2SDF<GranuleType>("zippedGranuel0Out",1);
-        zippedGranuel1Out = new SDF2SDF<GranuleType>("zippedGranuel1Out",1);;
-        headerMerge = new SDF2SDF<FrameHeader>("headerMerge",1);
-        headerChanule0Left = new SDF2SDF<FrameHeader>("headerChanule0Left",1);
-        headerChanule0Right = new SDF2SDF<FrameHeader>("headerChanule0Right",1);
-        sideInfoChanule0Left = new SDF2SDF<FrameSideInfo>("sideInfoChanule0Left",1);
-        sideInfoChanule0Right = new SDF2SDF<FrameSideInfo>("sideInfoChanule0Right",1);
-        chanuleData0Left = new SDF2SDF<ChanuleData>("chanuleData0Left",1);
-        chanuleData0Right = new SDF2SDF<ChanuleData>("chanuleData0Right",1);
-        headerChanule1Left = new SDF2SDF<FrameHeader>("headerChanule1Left",1);
-        headerChanule1Right = new SDF2SDF<FrameHeader>("headerChanule1Right",1);
-        sideInfoChanule1Left = new SDF2SDF<FrameSideInfo>("sideInfoChanule1Left",1);
-        sideInfoChanule1Right = new SDF2SDF<FrameSideInfo>("sideInfoChanule1Right",1);
-        chanuleData1Left = new SDF2SDF<ChanuleData>("chanuleData1Left",1);
-        chanuleData1Right = new SDF2SDF<ChanuleData>("chanuleData1Right",1);
-        zippedChanule0LOut = new SDF2SDF<ChanuleType>("zippedChanuel0LOut",1);
-        zippedChanule0ROut = new SDF2SDF<ChanuleType>("zippedChanuel0ROut",1);
-        zippedChanule1LOut = new SDF2SDF<ChanuleType>("zippedChanuel1LOut",1);
-        zippedChanule1ROut = new SDF2SDF<ChanuleType>("zippedChanuel1ROut",1);
-        samples_0_Left = new SDF2SDF<ChanuleSamples>("samples_0_Left",1);
-        samples_0_Right = new SDF2SDF<ChanuleSamples>("samples_0_Right",1);
-        samples_1_Left = new SDF2SDF<ChanuleSamples>("samples_1_Left",1);
-        samples_1_Right = new SDF2SDF<ChanuleSamples>("samples_1_Right",1);
-        sync_0l_1l = new SDF2SDF<VecType>("sync_0l_1l",1);
-        sync_0r_1r = new SDF2SDF<VecType>("sync_0r_1r",1);
-        sync_1r_0r_predel = new SDF2SDF<VecType>("sync_1r_0r_predel",1);
-        sync_1r_0r_aftdel = new SDF2SDF<VecType>("sync_1r_0r_aftdel",1);
-        sync_1l_0l_predel = new SDF2SDF<VecType>("sync_1l_0l_predel",1);
-        sync_1l_0l_aftdel = new SDF2SDF<VecType>("sync_1l_0l_aftdel",1);
-        zippedMerge = new SDF2SDF<MergeType>("zippedMerge",1);
+        dummyloopi		= new SDF2SDF<float>("dummyloopi",1);
+        dummyloopo		= new SDF2SDF<float>("dummyloopo",1);
+        zippedInput		= new SDF2SDF<InputType>("zippedInput",1);
+        lastFrame		= new SDF2SDF<char>("lastFrame",1);
+        headerGranule0		= new SDF2SDF<FrameHeader>("headerGranule0",1);
+        headerGranule1		= new SDF2SDF<FrameHeader>("headerGranule1",1);
+        sideInfoGranule0	= new SDF2SDF<FrameSideInfo>("sideInfoGranule0",1);
+        sideInfoGranule1	= new SDF2SDF<FrameSideInfo>("sideInfoGranule1",1);
+        granuleData0		= new SDF2SDF<GranuleData>("granuleData0",1);
+        granuleData1		= new SDF2SDF<GranuleData>("granuleData1",1);
+        zippedGranuel0Out	= new SDF2SDF<GranuleType>("zippedGranuel0Out",1);
+        zippedGranuel1Out	= new SDF2SDF<GranuleType>("zippedGranuel1Out",1);;
+        headerMerge		= new SDF2SDF<FrameHeader>("headerMerge",1);
+        headerChanule0Left	= new SDF2SDF<FrameHeader>("headerChanule0Left",1);
+        headerChanule0Right	= new SDF2SDF<FrameHeader>("headerChanule0Right",1);
+        sideInfoChanule0Left	= new SDF2SDF<FrameSideInfo>("sideInfoChanule0Left",1);
+        sideInfoChanule0Right	= new SDF2SDF<FrameSideInfo>("sideInfoChanule0Right",1);
+        chanuleData0Left	= new SDF2SDF<ChanuleData>("chanuleData0Left",1);
+        chanuleData0Right	= new SDF2SDF<ChanuleData>("chanuleData0Right",1);
+        headerChanule1Left	= new SDF2SDF<FrameHeader>("headerChanule1Left",1);
+        headerChanule1Right	= new SDF2SDF<FrameHeader>("headerChanule1Right",1);
+        sideInfoChanule1Left	= new SDF2SDF<FrameSideInfo>("sideInfoChanule1Left",1);
+        sideInfoChanule1Right	= new SDF2SDF<FrameSideInfo>("sideInfoChanule1Right",1);
+        chanuleData1Left	= new SDF2SDF<ChanuleData>("chanuleData1Left",1);
+        chanuleData1Right	= new SDF2SDF<ChanuleData>("chanuleData1Right",1);
+        zippedChanule0LOut	= new SDF2SDF<ChanuleType>("zippedChanuel0LOut",1);
+        zippedChanule0ROut	= new SDF2SDF<ChanuleType>("zippedChanuel0ROut",1);
+        zippedChanule1LOut	= new SDF2SDF<ChanuleType>("zippedChanuel1LOut",1);
+        zippedChanule1ROut	= new SDF2SDF<ChanuleType>("zippedChanuel1ROut",1);
+        samples_0_Left		= new SDF2SDF<ChanuleSamples>("samples_0_Left",1);
+        samples_0_Right		= new SDF2SDF<ChanuleSamples>("samples_0_Right",1);
+        samples_1_Left		= new SDF2SDF<ChanuleSamples>("samples_1_Left",1);
+        samples_1_Right		= new SDF2SDF<ChanuleSamples>("samples_1_Right",1);
+        sync_0l_1l		= new SDF2SDF<VecType>("sync_0l_1l",1);
+        sync_0r_1r		= new SDF2SDF<VecType>("sync_0r_1r",1);
+        sync_1r_0r_predel	= new SDF2SDF<VecType>("sync_1r_0r_predel",1);
+        sync_1r_0r_aftdel	= new SDF2SDF<VecType>("sync_1r_0r_aftdel",1);
+        sync_1l_0l_predel	= new SDF2SDF<VecType>("sync_1l_0l_predel",1);
+        sync_1l_0l_aftdel	= new SDF2SDF<VecType>("sync_1l_0l_aftdel",1);
+        zippedMerge		= new SDF2SDF<MergeType>("zippedMerge",1);
 
         a_ReadBitstreamAndExtractFrames = new ReadBitstreamAndExtractFrames("ReadBitstreamAndExtractFrames",ReadBitstreamAndExtractFrames_func,1,1);
         a_ReadBitstreamAndExtractFrames->iport1(*dummyloopo);
         a_ReadBitstreamAndExtractFrames->oport1(*zippedInput);
         //
-        vector<unsigned> inputUnzipperRates = {1,1,1,1,1,1,1,1,1};
-        a_InputUnzipper = new InputUnzipper("InputUnzipper",inputUnzipperRates);
+        a_InputUnzipper = new InputUnzipper("InputUnzipper",{1,1,1,1,1,1,1,1,1});
         a_InputUnzipper->iport1(*zippedInput);
         get<0>(a_InputUnzipper->oport)(*dummyloopi);
         get<1>(a_InputUnzipper->oport)(*lastFrame);
@@ -144,14 +143,12 @@ public:
         a_ProcessChanule0Left->iport4(*sync_1l_0l_aftdel);
         a_ProcessChanule0Left->oport1(*zippedChanule0LOut);
         //
-        vector<unsigned> chanuleUnzipperRates = {1,1};
-        a_Chanule0LUnzipper = new ChanuleUnzipper("ChanuleUnzipperL0",chanuleUnzipperRates);
+        a_Chanule0LUnzipper = new ChanuleUnzipper("ChanuleUnzipperL0",{1,1});
         a_Chanule0LUnzipper->iport1(*zippedChanule0LOut);
         get<0>(a_Chanule0LUnzipper->oport)(*samples_0_Left);
         get<1>(a_Chanule0LUnzipper->oport)(*sync_0l_1l);
         
-        vector<unsigned> mergeZipperRates = {1,1,1,1,1,1};
-        a_MergeZipper = new MergeZipper("MergeZipper",mergeZipperRates);
+        a_MergeZipper = new MergeZipper("MergeZipper",{1,1,1,1,1,1});
         get<0>(a_MergeZipper->iport)(*samples_1_Right);
         get<1>(a_MergeZipper->iport)(*samples_0_Left);
         get<2>(a_MergeZipper->iport)(*lastFrame);
@@ -169,8 +166,7 @@ public:
         a_ProcessGranule0->iport3(*granuleData0);
         a_ProcessGranule0->oport1(*zippedGranuel0Out);
         //
-        vector<unsigned> granuelUnzipperRates = {1,1,1,1,1,1};
-        a_Granuel0Unzipper = new GranuelUnzipper("GranuelUnzipper0",granuelUnzipperRates);
+        a_Granuel0Unzipper = new GranuelUnzipper("GranuelUnzipper0",{1,1,1,1,1,1});
         a_Granuel0Unzipper->iport1(*zippedGranuel0Out);
         get<0>(a_Granuel0Unzipper->oport)(*headerChanule0Left);
         get<1>(a_Granuel0Unzipper->oport)(*sideInfoChanule0Left);
@@ -185,7 +181,7 @@ public:
         a_ProcessGranule1->iport3(*granuleData1);
         a_ProcessGranule1->oport1(*zippedGranuel1Out);
         //
-        a_Granuel1Unzipper = new GranuelUnzipper("GranuelUnzipper1",granuelUnzipperRates);
+        a_Granuel1Unzipper = new GranuelUnzipper("GranuelUnzipper1",{1,1,1,1,1,1});
         a_Granuel1Unzipper->iport1(*zippedGranuel1Out);
         get<0>(a_Granuel1Unzipper->oport)(*headerChanule1Left);
         get<1>(a_Granuel1Unzipper->oport)(*sideInfoChanule1Left);
@@ -201,7 +197,7 @@ public:
         a_ProcessChanule0Right->iport4(*sync_1r_0r_aftdel);
         a_ProcessChanule0Right->oport1(*zippedChanule0ROut);
         //
-        a_Chanule0RUnzipper = new ChanuleUnzipper("ChanuleUnzipperR0",chanuleUnzipperRates);
+        a_Chanule0RUnzipper = new ChanuleUnzipper("ChanuleUnzipperR0",{1,1});
         a_Chanule0RUnzipper->iport1(*zippedChanule0ROut);
         get<0>(a_Chanule0RUnzipper->oport)(*samples_0_Right);
         get<1>(a_Chanule0RUnzipper->oport)(*sync_0r_1r);
@@ -213,7 +209,7 @@ public:
         a_ProcessChanule1Right->iport4(*sync_0r_1r);
         a_ProcessChanule1Right->oport1(*zippedChanule1ROut);
         //
-        a_Chanule1RUnzipper = new ChanuleUnzipper("ChanuleUnzipperR1",chanuleUnzipperRates);
+        a_Chanule1RUnzipper = new ChanuleUnzipper("ChanuleUnzipperR1",{1,1});
         a_Chanule1RUnzipper->iport1(*zippedChanule1ROut);
         get<0>(a_Chanule1RUnzipper->oport)(*samples_1_Right);
         get<1>(a_Chanule1RUnzipper->oport)(*sync_1r_0r_predel);
@@ -225,7 +221,7 @@ public:
         a_ProcessChanule1Left->iport4(*sync_0l_1l);
         a_ProcessChanule1Left->oport1(*zippedChanule1LOut);
         //
-        a_Chanule1LUnzipper = new ChanuleUnzipper("ChanuleUnzipperL1",chanuleUnzipperRates);
+        a_Chanule1LUnzipper = new ChanuleUnzipper("ChanuleUnzipperL1",{1,1});
         a_Chanule1LUnzipper->iport1(*zippedChanule1LOut);
         get<0>(a_Chanule1LUnzipper->oport)(*samples_1_Left);
         get<1>(a_Chanule1LUnzipper->oport)(*sync_1l_0l_predel);

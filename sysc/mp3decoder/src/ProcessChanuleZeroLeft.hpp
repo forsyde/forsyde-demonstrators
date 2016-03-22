@@ -5,18 +5,21 @@
 #include "include/MP3Decoder.h"
 #include "include/MP3Decoder_types.hpp"
 
-using namespace std;
+using namespace ForSyDe;
+using namespace ForSyDe::SDF;
 
 void ProcessChanuleZeroLeft_func(
-    token_t<ChanuleType>&              outs, // headerChanuleLeft
-    const token_t<FrameHeader>&        inp1, // headerGranule
-    const token_t<FrameSideInfo>&      inp2, // sideInfoGranule
-    const token_t<ChanuleData>&        inp3, // chanuleData
-    const token_t<VecType>&            inp4  // sync
+    tokens<ChanuleType>&              outs, // headerChanuleLeft
+    const tokens<FrameHeader>&        inp1, // headerGranule
+    const tokens<FrameSideInfo>&      inp2, // sideInfoGranule
+    const tokens<ChanuleData>&        inp3, // chanuleData
+    const tokens<VecType>&            inp4  // sync
 )
 {
-    token_t<ChanuleSamples>         out1(1);
-    token_t<VecType>                out2(1);
+  outs = init<ChanuleSamples,VecType>(1,{1,1});
+  ChanuleSamples* out1 = &get<0,0,0>(outs);  
+  VecType*        out2 = &get<0,1,0>(outs);  
+
 #pragma ForSyDe begin ProcessChanuleZeroLeft_func
 
     /* User-defined local variables */
@@ -28,7 +31,6 @@ void ProcessChanuleZeroLeft_func(
 
 
 #pragma ForSyDe end
-    outs[0] = make_tuple(out1,out2);
 }
 
 #endif

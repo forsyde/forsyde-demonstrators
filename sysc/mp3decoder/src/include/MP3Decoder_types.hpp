@@ -17,9 +17,9 @@
 
 using namespace ForSyDe::SDF;
 
-typedef token_tuple_t<
+typedef token_tuple<
         float,              // dummyCounter
-        bool,               // lastFrame
+        char,               // lastFrame
         FrameHeader,        // headerMerge
         FrameHeader,        // headerGranule0
         FrameSideInfo,      // sideInfoGranule0
@@ -31,7 +31,7 @@ typedef token_tuple_t<
 
 typedef unzipN<
         float,
-        bool,
+        char,
         FrameHeader,
         FrameHeader,
         FrameSideInfo,
@@ -42,10 +42,10 @@ typedef unzipN<
     > InputUnzipper;
 
 
-typedef token_tuple_t<
+typedef token_tuple<
         ChanuleSamples,
         ChanuleSamples,
-        bool,
+        char,
         FrameHeader,
         ChanuleSamples,
         ChanuleSamples
@@ -54,14 +54,14 @@ typedef token_tuple_t<
 typedef zipN<
     ChanuleSamples,
     ChanuleSamples,
-    bool,
+    char,
     FrameHeader,
     ChanuleSamples,
     ChanuleSamples
     > MergeZipper;
 
 
-typedef token_tuple_t<
+typedef token_tuple<
         ChanuleSamples,
         VecType
     > ChanuleType;
@@ -71,7 +71,7 @@ typedef unzipN<
         VecType
     > ChanuleUnzipper;
 
-typedef token_tuple_t<
+typedef token_tuple<
         FrameHeader,            // headerChanuleLeft
         FrameSideInfo,          // sideInfoChanuleLeft
         ChanuleData,            // chanuleDataLeft
@@ -90,10 +90,10 @@ typedef unzipN<
     > GranuelUnzipper;
 
 
-typedef comb<InputType,float>                                            ReadBitstreamAndExtractFrames;
+typedef comb<InputType,float>    ReadBitstreamAndExtractFrames;
 typedef comb4<ChanuleType,FrameHeader,FrameSideInfo,ChanuleData,VecType> ProcessChanule;
 typedef comb3<GranuleType,FrameHeader,FrameSideInfo,GranuleData>         ProcessGranule;
-typedef sink<MergeType> Merge;
+typedef sink<MergeType>          Merge;
 
 
 DEFINE_TYPE(InputType);
