@@ -7,3 +7,4 @@
 | vad          | Yes      | Yes  | ?     | ?       | Yes  | ?  | ?   | ?       |
 | jpeg-encoder | Yes      | Yes  | Yes   | ?       | Yes  | ?  | ?   | ?       |
 | mp3-decoder  | Yes      | Yes  | Yes   | ?       | Yes  | ?  | ?   | ?       |
+| susan        | Yes      | ?    | ?     | ?       | Yes  | ?  | ?   | ?       |
