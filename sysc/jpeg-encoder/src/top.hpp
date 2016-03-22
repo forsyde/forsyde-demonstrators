@@ -46,10 +46,10 @@ void rgb_block_collector_func(tokens<rgb_collector_out_t> &out, const tokens<bit
   //std::cout << "Block collector function" << std::endl;
   out = init<bitmap_reader_out,bitmap_reader_out,bitmap_reader_out,bitmap_reader_out>(1, { 1 , 1 , 1, 1 }); 
   
-  *get<bitmap_reader_out, 0,0,0>(out) = *get<bitmap_reader_out, 0>(inp1);
-  *get<bitmap_reader_out, 0,1,0>(out) = *get<bitmap_reader_out, 1>(inp1);
-  *get<bitmap_reader_out, 0,2,0>(out) = *get<bitmap_reader_out, 2>(inp1);
-  *get<bitmap_reader_out, 0,3,0>(out) = *get<bitmap_reader_out, 3>(inp1);
+  get<0,0,0>(out) = get<0>(inp1);
+  get<0,1,0>(out) = get<1>(inp1);
+  get<0,2,0>(out) = get<2>(inp1);
+  get<0,3,0>(out) = get<3>(inp1);
 }
 
 void write_jpeg_func(const encoded_block inp)
@@ -89,10 +89,10 @@ void write_jpeg_func(const encoded_block inp)
 void merge_blocks_func(tokens<encoded_block>& out, const tokens<merge_blocks_in_t>& inp)
 {
   out.resize(4);
-  *get<encoded_block, 0>(out) = *get<encoded_block, 0,0,0> (inp);
-  *get<encoded_block, 1>(out) = *get<encoded_block, 0,1,0> (inp);
-  *get<encoded_block, 2>(out) = *get<encoded_block, 0,2,0> (inp);
-  *get<encoded_block, 3>(out) = *get<encoded_block, 0,3,0> (inp);
+  get<0>(out) = get<0,0,0> (inp);
+  get<1>(out) = get<0,1,0> (inp);
+  get<2>(out) = get<0,2,0> (inp);
+  get<3>(out) = get<0,3,0> (inp);
 }
 
 void write_blocks_func(const encoded_block inp)

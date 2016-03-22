@@ -10,7 +10,7 @@
 
 #include "c_types.h"
 //#include "lena.h"
-#include "files/cat.h"
+#include "../files/cat.h"
 //#include "ray.h"
 
 void load_MCU(unsigned int MCU_x, unsigned int MCU_y, unsigned int width, unsigned int height, unsigned int picture_width, colorRGB* RGB_buffer,

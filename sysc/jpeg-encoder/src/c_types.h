@@ -14,7 +14,7 @@
 
 typedef unsigned char color;
 
-C_STRUCT( huffman_t,
+extern "C" STRUCT( huffman_t,
 	  const unsigned char (*haclen)[12];
 	  const unsigned short (*hacbit)[12];
 	  const unsigned char *hdclen;
@@ -28,7 +28,7 @@ C_STRUCT( huffman_t,
 // the out of the Huffman encoding step
 // packed into a 256 bit array, of which not all bits will be used
 
-C_STRUCT( huffman_encoding_out,
+extern "C" STRUCT( huffman_encoding_out,
 	  unsigned int content[8];
 	  unsigned int bit_position;
 	  unsigned int height;
@@ -36,12 +36,12 @@ C_STRUCT( huffman_encoding_out,
 	  int block_id;
 	  ) {} ;
 
-C_STRUCT( block_out,
+extern "C" STRUCT( block_out,
 	  unsigned int content[48];
 	  unsigned int bit_position;
 	  ) {} ;
 
-C_STRUCT( smaller_block,
+extern "C" STRUCT( smaller_block,
 	 unsigned int height;
 	 unsigned int width;
 	 int block_id;
@@ -52,7 +52,7 @@ C_STRUCT( smaller_block,
 
 // bitmap types
 
-C_STRUCT( BITMAP_HEADER,
+extern "C" STRUCT( BITMAP_HEADER,
 	  unsigned int HeaderSize;
 	  int Width;
 	  int Height;
@@ -75,45 +75,45 @@ C_STRUCT( BITMAP_HEADER,
 	  unsigned int GammaBlue;
 	  ) {} ;
 
-C_STRUCT( RGBA,
+extern "C" STRUCT( RGBA,
 	  color Red;
 	  color Green;
 	  color Blue;
 	  color Alpha;
 	  ) {} ;
 
-C_STRUCT( BGRA,
+extern "C" STRUCT( BGRA,
 	  color Blue;
 	  color Green;
 	  color Red;
 	  color Alpha;
 	  ) {} ;
 
-C_STRUCT( BGR,
+extern "C" STRUCT( BGR,
 	  color Blue;
 	  color Green;
 	  color Red;
 	  ) {} ;
 
-C_STRUCT( colorRGB,
+extern "C" STRUCT( colorRGB,
 	  unsigned char B, G, R;
 	  ) {} ;
 
-C_STRUCT( BGR16,
+extern "C" STRUCT( BGR16,
 	  unsigned short int Blue :5;
 	  unsigned short int Green :5;
 	  unsigned short int Red :5;
 	  unsigned short int Reserved :1;
 	  ) {} ;
 
-C_STRUCT( bitmap_reader_out,
+extern "C" STRUCT( bitmap_reader_out,
 	  unsigned int height;
 	  unsigned int width;
 	  int block_id;
 	  BGR color_block[16][16];
 	  ) {} ;
 
-C_STRUCT( encoded_block,
+extern "C" STRUCT( encoded_block,
 	  unsigned int height;
 	  unsigned int width;
 	  int block_id;
