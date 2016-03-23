@@ -1,24 +1,7 @@
 #include "susan.h"
-#include "input_small.h"
 #include <string.h>
+#include <stdio.h>
 
-
-/**
- *  Function for reading data from the .pgm input file.
- *
- * @param fileName
- *  Name of the file
- * @param imgInput
- *  Pointer to the block in which we are going to save the data
- */
-void getImage(const char *fileName, ImageInput *imgInput) {
-
-  imgInput->xSize = input_width;
-  imgInput->ySize = input_height;
-
-  memcpy(imgInput->imageBuffer, input, input_width*input_height);
-
-}
 
 /**
  * Split the image into MCU blocks.
@@ -29,28 +12,14 @@ void getImage(const char *fileName, ImageInput *imgInput) {
  * @param block
  *  The MCU block that hold the current resulting split.
  */
-void splitIntoMCUs(MCU_BLOCK* block) {
-
-  /*We are reading the content of the .pgm file ONCE*/
-  static uchar imageRead = 0;
-
-  /*Block for storing the data read from the .pgm file*/
-  static ImageInput imgAfterGet;
-
-
-  if (imageRead == 0) {
-    memset(&imgAfterGet, 0, sizeof(imgAfterGet));
-    getImage(INPUT_FILE, &imgAfterGet);
-    imageRead = 1;
-  }
-
+void splitIntoMCUs(MCU_BLOCK* block, Image* imgAfterGet) {
 
   /* The image's size that is actually
    * taken into account during edge detection */
   static int new_x_size;
-  new_x_size = imgAfterGet.xSize - 2 * OUTER_PIXEL;
+  new_x_size = imgAfterGet->xSize - 2 * OUTER_PIXEL;
   static int new_y_size;
-  new_y_size = imgAfterGet.ySize - 2 * OUTER_PIXEL;
+  new_y_size = imgAfterGet->ySize - 2 * OUTER_PIXEL;
 
   /* Count the rows and columns of MCU blocks for the given image */
   static int remainder_last_column;
@@ -76,15 +45,15 @@ void splitIntoMCUs(MCU_BLOCK* block) {
 
   /*We initialize the static data of the block.
    * That is the width and the height of the whole image*/
-  block->IMAGE_WIDTH = imgAfterGet.xSize;
-  block->IMAGE_HEIGHT = imgAfterGet.ySize;
+  block->IMAGE_WIDTH = imgAfterGet->xSize;
+  block->IMAGE_HEIGHT = imgAfterGet->ySize;
   block->ROW = row;
   block->COLUMN = column;
 
   /*We copy the corresponding data from the whole image into the block*/
   takeMCU(block, f_i, f_j, n_columns, n_rows, remainder_last_row,
-      remainder_last_column, imgAfterGet.xSize, row, column,
-      imgAfterGet.imageBuffer);
+      remainder_last_column, imgAfterGet->xSize, row, column,
+      imgAfterGet->imageBuffer);
 
   /*increment the row and column accordingly*/
   if (column < n_columns) {

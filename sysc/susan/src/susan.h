@@ -27,8 +27,8 @@
 #define MAX_NO_EDGES 2650
 #define DRAWING_MODE 0
 
-#define INPUT_FILE "input_large.pgm"
-#define OUTPUT_FILE "output_large.pgm"
+//#define INPUT_FILE "input_large.pgm"
+#define OUTPUT_FILE "output.pgm"
 
 #include <math.h>
 
@@ -36,26 +36,27 @@
 extern "C" {
 #endif
 
-typedef unsigned char uchar;
-typedef struct {
+  typedef unsigned char uchar;
+
+  typedef struct {
     int x, y, info, dx, dy, I;
-} CORNER_LIST[MAX_CORNERS];
+  } CORNER_LIST[MAX_CORNERS];
 
 
 
-/**
- * Data structure for the lookup table
- */
-typedef struct BrightnessLUT {
+  /**
+   * Data structure for the lookup table
+   */
+  typedef struct BrightnessLUT {
 
     uchar bpBuffer[516];
 
-} BrightnessLUT;
+  } BrightnessLUT;
 
-/**
- * Data structure for the MCU block
- */
-typedef struct MCU_BLOCK {
+  /**
+   * Data structure for the MCU block
+   */
+  typedef struct MCU_BLOCK {
 
     /*The width of the whole image*/
     int IMAGE_WIDTH;
@@ -80,75 +81,70 @@ typedef struct MCU_BLOCK {
 
     /*Array holding the intensity of the blocks' pixels*/
     uchar IN[(BLOCK_SIZE + 2 * OVERLAP_PIXEL)
-        * (BLOCK_SIZE + 2 * OVERLAP_PIXEL) + 3];
+	     * (BLOCK_SIZE + 2 * OVERLAP_PIXEL) + 3];
 
-} MCU_BLOCK;
+  } MCU_BLOCK;
 
-/**
- * Data structure for the data of the whole .pgm image
- */
-typedef struct ImageInput {
+  /**
+   * Data structure for the data of the whole .pgm image
+   */
+  typedef struct ImageInput {
 
     int xSize;
     int ySize;
     uchar imageBuffer[WIDTH*HEIGHT];
 
-} ImageInput;
+  } Image;
 
-/**
- * Data structure for keeping the USAN value for every pixel of the MCU block
- */
-typedef struct EdgeStrength {
+  /**
+   * Data structure for keeping the USAN value for every pixel of the MCU block
+   */
+  typedef struct EdgeStrength {
 
     int rBuffer[(BLOCK_SIZE + 2 * OVERLAP_PIXEL) * (BLOCK_SIZE + 2
-        * OVERLAP_PIXEL)];
+						    * OVERLAP_PIXEL)];
 
-} EdgeStrength;
+  } EdgeStrength;
 
-/**
- * Data structure for keeping the strength of the 'edginess'
- * of every pixel within MCU block
- */
-typedef struct EdgeDirection {
+  /**
+   * Data structure for keeping the strength of the 'edginess'
+   * of every pixel within MCU block
+   */
+  typedef struct EdgeDirection {
 
     uchar midBuffer[(BLOCK_SIZE + 2 * OVERLAP_PIXEL) * (BLOCK_SIZE + 2
-        * OVERLAP_PIXEL) + 3];
+							* OVERLAP_PIXEL) + 3];
 
-} EdgeDirection;
+  } EdgeDirection;
 
-/**
- *
- * Declarations of the specific methods used within the KPN
- */
+  /**
+   *
+   * Declarations of the specific methods used within the KPN
+   */
 
-void splitIntoMCUs(MCU_BLOCK* block);
-void takeMCU(MCU_BLOCK *block, int f_i, int f_j, int n_columns, int n_rows,
-    int remainder_last_row, int remainder_last_column, int x_size, int row,
-    int column, uchar* tmp);
+  void splitIntoMCUs(MCU_BLOCK* block, ImageInput* img);
+  void takeMCU(MCU_BLOCK *block, int f_i, int f_j, int n_columns, int n_rows,
+	       int remainder_last_row, int remainder_last_column, int x_size, int row,
+	       int column, uchar* tmp);
 
-void susanUsan(const MCU_BLOCK *imgInput, MCU_BLOCK *imgOutput, EdgeStrength *strength);
+  void susanUsan(const MCU_BLOCK *imgInput, MCU_BLOCK *imgOutput, EdgeStrength *strength);
 
-void susanDirection(const MCU_BLOCK *imgInput, const EdgeStrength *strength,
-       MCU_BLOCK *imgOutput, EdgeStrength *strengthOutput, EdgeDirection *direction);
+  void susanDirection(const MCU_BLOCK *imgInput, const EdgeStrength *strength,
+		      MCU_BLOCK *imgOutput, EdgeStrength *strengthOutput, EdgeDirection *direction);
 
-void susanThin(const MCU_BLOCK *imgInput, const EdgeStrength *edgeSt, const EdgeDirection *edgeDirInput,
-               MCU_BLOCK *imgOutput, EdgeDirection *edgeDir);
+  void susanThin(const MCU_BLOCK *imgInput, const EdgeStrength *edgeSt, const EdgeDirection *edgeDirInput,
+		 MCU_BLOCK *imgOutput, EdgeDirection *edgeDir);
 
-void wrapUp(const MCU_BLOCK* imgOutput, const EdgeDirection *edgeDir);
-void edgeDraw(uchar* outputMidBuffer, uchar* outputImageBuffer,
-    const int x_size, const int y_size);
-void stitch(MCU_BLOCK* imgOutput, uchar* outputImageBuffer,
-    uchar* outputMidBuffer, const EdgeDirection *edgeDir);
-void writeToFile(char* fileName, const MCU_BLOCK* imgAfterThin, uchar* outputImageBuffer);
+  void wrapUp(const MCU_BLOCK* imgOutput, const EdgeDirection *edgeDir, 
+	       uchar* first, uchar* last, ImageInput* outImg);
+  void edgeDraw(uchar* outputMidBuffer, uchar* outputImageBuffer,
+		const int x_size, const int y_size);
+  void stitch(MCU_BLOCK* imgOutput, uchar* outputImageBuffer,
+	      uchar* outputMidBuffer, const EdgeDirection *edgeDir);
 
+  void initOutFile(uchar width, uchar height);
+  void writeToFile(uchar width, uchar height, uchar* outputImageBuffer);
 
-
-
-void splitIntoMCUs_wrap(int task_id, void *** input, void ***output, int csdf_cycle);
-void susanUsan_wrap(int task_id, void *** input, void ***output, int csdf_cycle);
-void susanDirection_wrap(int task_id, void *** input, void ***output, int csdf_cycle);
-void susanThin_wrap(int task_id, void *** input, void ***output, int csdf_cycle);
-void wrapUp_wrap(int task_id, void *** input, void ***output, int csdf_cycle);
 
 #ifdef __cplusplus
 }

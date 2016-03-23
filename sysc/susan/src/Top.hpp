@@ -5,19 +5,21 @@
 #include "conf.h"
 #include "susan.h"
 #include "types.hpp"
+#include "imageio.hpp"
 
 using namespace ForSyDe;
 using namespace ForSyDe::SDF;
 
 
-void getImage_func(tokens<MCU_BLOCK> &out, const tokens<int> &inp1) {
-  std::cout << "getImage" << std::endl;
-  
+void splitMcuBlocks_func(tokens<MCU_BLOCK> &out, tokens<Image> in) {
+  std::cout << "splitImage" << std::endl;
   out = init<MCU_BLOCK>(1);
-  MCU_BLOCK* o = &get<0>(out);
+
+  MCU_BLOCK*  o = &get<0>(out);
+  Image* i = &in[0];
 
 #pragma ForSyDe begin getImage_func
-  splitIntoMCUs(o);
+  splitIntoMCUs(o, i);
 #pragma ForSyDe end
 }
 
@@ -64,32 +66,41 @@ void thin_func(tokens<SusanThinOutputType> &out, const tokens<MCU_BLOCK> &inp1, 
 #pragma ForSyDe end
 }
 
-void putImage_func(tokens<int> &out, const tokens<MCU_BLOCK> &inp1, const tokens<EdgeDirection> &inp2) {
-  std::cout << "putImage" << std::endl;
-  out = init<int>(1);
+void stitchImage_func(tokens<SusanImageOutputType> &out, 
+		   const tokens<MCU_BLOCK> &inp1, const tokens<EdgeDirection> &inp2) {
+  std::cout << "stitchImage" << std::endl;
+  out = init<uchar, uchar, Image>(1, {1,1,1});
 
   MCU_BLOCK      i1 =  get<0>(inp1);
   EdgeDirection  i2 =  get<0>(inp2);
-  int*           o1 = &get<0>(out);
+  uchar*         o1 = &get<0,0,0>(out);
+  uchar*         o2 = &get<0,1,0>(out);
+  Image*         o3 = &get<0,2,0>(out);
 
 #pragma ForSyDe begin putImage_func
-  wrapUp(&i1, &i2);	
-  *o1 = 1; //dummy output
+  wrapUp(&i1, &i2, o1, o2, o3);
 #pragma ForSyDe end
 }
 
-void report_func(const int inp1) {
- #pragma ForSyDe begin report_func
-  ;
-  ;
-#pragma ForSyDe end
+void report_func(const SusanImageOutputType inp1) {
+
+  uchar first = get<0,0>(inp1);
+  uchar last  = get<1,0>(inp1);
+  Image image = get<2,0>(inp1);
+
+  if (first) initOutFile(image.xSize, image.ySize);
+  if (last) {
+    writeToFile(image.xSize, image.ySize, &image.imageBuffer[0]);
+    sc_stop();
+  }
+
 }
 
 SC_MODULE(Top) {
  public:
   // Signals
-  SDF2SDF<int>                  dummyInput;
-  SDF2SDF<MCU_BLOCK>            getImageOut_McuBlock;
+  SDF2SDF<Image>                inputImage;
+  SDF2SDF<MCU_BLOCK>            in_McuBlock;
   SDF2SDF<SusanUsanOutputType>  susanUsanOut;
   SDF2SDF<MCU_BLOCK>		susanUsanOut_McuBlock;
   SDF2SDF<EdgeStrength>		susanUsanOut_EdgeStrength;
@@ -100,17 +111,18 @@ SC_MODULE(Top) {
   SDF2SDF<SusanThinOutputType>  susanThinOut;
   SDF2SDF<MCU_BLOCK>            susanThinOut_McuBlock;
   SDF2SDF<EdgeDirection>	susanThinOut_EdgeDirection;
-  SDF2SDF<int>                  dummyOutput;
+  SDF2SDF<SusanImageOutputType> outputImage;
 
   // Triple Unzippers
   SusanDirectionOutUnzipper *susanDirectionOutUnzipper;
 
+
   SC_CTOR(Top) {
-    SDF::make_constant("dummyInputConst", 0, 0, dummyInput);
+    SDF::make_constant("ReadImage", getImage(), 0, inputImage);
 
-    make_comb("getImage", getImage_func, 1, 1, getImageOut_McuBlock, dummyInput);
+    SDF::make_comb("splitMcuBlocks", splitMcuBlocks_func, 1, 1, in_McuBlock, inputImage);
 
-    make_comb("usan", usan_func, 1, 1, susanUsanOut, getImageOut_McuBlock);
+    make_comb("usan", usan_func, 1, 1, susanUsanOut, in_McuBlock);
 
     make_unzip("susanUsanOutUnzipper", susanUsanOut, 1, 1, susanUsanOut_McuBlock, susanUsanOut_EdgeStrength);
    
@@ -126,9 +138,9 @@ SC_MODULE(Top) {
 
     make_unzip("susanThinOutUnzipper", susanThinOut, 1, 1, susanThinOut_McuBlock, susanThinOut_EdgeDirection);
 
-    make_comb2("putImage", putImage_func, 1, 1, 1, dummyOutput, susanThinOut_McuBlock, susanThinOut_EdgeDirection);
+    make_comb2("stitchImage", stitchImage_func, 1, 1, 1, outputImage, susanThinOut_McuBlock, susanThinOut_EdgeDirection);
 
-    SDF::make_sink("report", report_func, dummyOutput);
+    SDF::make_sink("report", report_func, outputImage);
   }
 
 #ifdef FORSYDE_INTROSPECTION

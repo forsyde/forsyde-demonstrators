@@ -2,27 +2,28 @@
 #include <stdio.h>
 
 static uchar initialized=0;
-static uchar last_MCU=0;
-/**
- * Function to write the resulting image (with drawn edges) to a *.pgm file
- * @param fileName
- *  The *.pgm file to write to.
- * @param imgAfterThin
- *  Block having a part of the image. In this case, it is the last block.
- * @param outputImageBuffer
- *  Array that keeps the intensity data for every pixel of the whole image.
- */
-void writeToFile(char* fileName, const MCU_BLOCK* imgAfterThin,
-    uchar* outputImageBuffer) {
-  /*We save the final result into an output image*/
-	FILE *file;
-	file = fopen("files/output.pgm","a+");
+static uchar last_MCU = 0;
 
-  int n;
-  for(n=0; n < imgAfterThin->IMAGE_WIDTH*imgAfterThin->IMAGE_HEIGHT; n++)
-  {
-	  // send it to the output
-	  fprintf(file,"%03d ",outputImageBuffer[n]);
+
+void initOutFile(uchar width, uchar height) {
+   FILE *file;
+    file = fopen(OUTPUT_FILE,"w");
+    fprintf(file,"P2\n# output.pgm\n%d %d\n255\n", width, height);
+    fclose(file);
+}
+
+
+void writeToFile(uchar width, uchar height, uchar* outputImageBuffer) {
+  /*We save the final result into an output image*/
+  FILE *file;
+  file = fopen(OUTPUT_FILE,"a+");
+
+  int m, n;
+  for(m=0; m < height; m++){
+    for(n=0; n < width; n++){
+      fprintf(file,"%03d ",outputImageBuffer[m * width + n]);
+    }
+    fprintf(file,"\n");
   }
   fclose(file);
 
@@ -39,29 +40,33 @@ void writeToFile(char* fileName, const MCU_BLOCK* imgAfterThin,
  * @param edgeDir
  *  Block that keeps data about the level of 'edginess'
  */
-void wrapUp(const MCU_BLOCK* imgOutput, const EdgeDirection *edgeDir) {
+void wrapUp(const MCU_BLOCK* imgOutput, const EdgeDirection *edgeDir, 
+	     uchar* first, uchar* last, Image* outImg) {
 
   static uchar outputImageBuffer[WIDTH*HEIGHT];
   static uchar outputMidBuffer[WIDTH*HEIGHT];
 
+  *first = 0;
+
   if(initialized == 0){
-
-    initialized=1;
-    memset(outputMidBuffer, 100, imgOutput->IMAGE_WIDTH
-        * imgOutput->IMAGE_HEIGHT);
-
+      initialized=1;
+      *first = 1;
+      memset(outputMidBuffer, 100, imgOutput->IMAGE_WIDTH * imgOutput->IMAGE_HEIGHT);
   }
 
   stitch((MCU_BLOCK*)imgOutput, outputImageBuffer, outputMidBuffer, edgeDir);
 
-
-
   if (last_MCU == 1) {
-    edgeDraw(outputMidBuffer, outputImageBuffer, imgOutput->IMAGE_WIDTH,
-        imgOutput->IMAGE_HEIGHT);
-    writeToFile(OUTPUT_FILE, imgOutput, outputImageBuffer);
-    // Do nothing
+    edgeDraw(outputMidBuffer, outputImageBuffer, imgOutput->IMAGE_WIDTH, imgOutput->IMAGE_HEIGHT);
   }
+
+  outImg->xSize = imgOutput->IMAGE_WIDTH;
+  outImg->ySize = imgOutput->IMAGE_HEIGHT;
+  memcpy(outImg->imageBuffer, outputImageBuffer, WIDTH*HEIGHT);
+  //uchar* temp = outImg->imageBuffer;
+  //temp = &outputImageBuffer[0];
+
+  *last  = last_MCU;
 }
 
 /**

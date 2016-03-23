@@ -2,9 +2,15 @@
 
 ## Status for SystemC-ForSyDe applications
 
-| Application  | Compiles | Runs | Valid | SysC-perf | Plot | SDF3 | DSE | Maps on |
-| ------------ |:--------:|:----:|:-----:|:---------:|:----:|:----:|:---:| ------- | 
-| vad          | Yes      | Yes  | ?     | ?       | Yes  | ?  | ?   | ?       |
-| jpeg-encoder | Yes      | Yes  | Yes   | ?       | Yes  | ?  | ?   | ?       |
-| mp3-decoder  | Yes      | Yes  | Yes   | ?       | Yes  | ?  | ?   | ?       |
-| susan        | Yes      | ?    | ?     | ?       | Yes  | ?  | ?   | ?       |
+| Application                | vad | jpeg-encoder | mp3-decoder | susan |
+| -------------------------- |:---:|:------------:|:-----------:|:-----:|
+| compilation                | Yes | Yes          | Yes         | Yes   |
+| valid execution            | ?   | Yes          | Yes         | Yes   |
+| valid IR                   | Yes | Yes          | Yes         | Yes   |
+| SysC performance metrics   | ?   | ?            | ?           | ?     |
+| IR Plot                    | Yes | Yes          | Yes         | Yes   |
+| SDF3 conversion            | ?   | ?            | ?           | ?     |
+| ADSE input generation      | ?   | ?            | ?           | ?     |
+| DSE                        | ?   | ?            | ?           | ?     |
+| Maps on                    | ?   | ?            | ?           | ?     |
+
