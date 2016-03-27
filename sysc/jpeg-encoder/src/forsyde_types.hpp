@@ -10,11 +10,11 @@ typedef ForSyDe::SDF::unzipN <smaller_block, smaller_block, smaller_block, small
 typedef ForSyDe::SDF::zipN <huffman_encoding_out, huffman_encoding_out, huffman_encoding_out, 
   huffman_encoding_out, huffman_encoding_out, huffman_encoding_out> encoded_blocks_zipper;
 
-typedef ForSyDe::SDF::token_tuple <encoded_block,encoded_block,encoded_block,encoded_block> merge_blocks_in_t;
-typedef ForSyDe::SDF::token_tuple <bitmap_reader_out,bitmap_reader_out,bitmap_reader_out,bitmap_reader_out> rgb_collector_out_t;
-typedef ForSyDe::SDF::token_tuple <smaller_block,smaller_block,smaller_block,smaller_block,smaller_block,smaller_block>
+typedef ForSyDe::token_tuple <encoded_block,encoded_block,encoded_block,encoded_block> merge_blocks_in_t;
+typedef ForSyDe::token_tuple <bitmap_reader_out,bitmap_reader_out,bitmap_reader_out,bitmap_reader_out> rgb_collector_out_t;
+typedef ForSyDe::token_tuple <smaller_block,smaller_block,smaller_block,smaller_block,smaller_block,smaller_block>
   color_conversion_out_t;
-typedef ForSyDe::SDF::token_tuple <huffman_encoding_out,huffman_encoding_out,huffman_encoding_out,huffman_encoding_out,
+typedef ForSyDe::token_tuple <huffman_encoding_out,huffman_encoding_out,huffman_encoding_out,huffman_encoding_out,
   huffman_encoding_out,huffman_encoding_out> concatenate_smaller_blocks_in_t;
 
 DEFINE_TYPE(merge_blocks_in_t)

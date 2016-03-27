@@ -19,7 +19,7 @@
 #include <array>
 #include <cmath>
 
-using namespace ForSyDe::SDF;
+using namespace ForSyDe;
 
 typedef std::array<short,9> r_t;
 typedef std::array<short,9> L_av_t;

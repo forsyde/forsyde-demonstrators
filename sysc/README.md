@@ -7,9 +7,10 @@
 | compilation                | Yes | Yes         | Yes   | Yes          |
 | valid execution            | ?   | Yes         | Yes   | Yes          |
 | valid IR                   | Yes | Yes         | Yes   | Yes          |
-| SysC performance metrics   | ?   | ?           | ?     | ?            |
+| valid types                | Yes | Yes         | Yes   | Yes          |
+| SysC performance metrics   | Yes | Yes         | Yes   | Yes          |
 | IR Plot                    | Yes | Yes         | Yes   | Yes          |
-| SDF3 conversion            | ?   | ?           | ?     | ?            | 
+| SDF3 conversion            | Yes | Yes         | Yes   | Yes          | 
 | ADSE input generation      | ?   | ?           | ?     | ?            |
 | DSE                        | ?   | ?           | ?     | ?            |
 | Maps on                    | ?   | ?           | ?     | ?            |

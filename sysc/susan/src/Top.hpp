@@ -148,6 +148,9 @@ SC_MODULE(Top) {
   void start_of_simulation() {
     ForSyDe::XMLExport dumper("ir/");
     dumper.traverse(this);
+#ifdef FORSYDE_TYPE_INTROSPECTION
+    TypeContainer::get().printXML("ir/types.xml");
+#endif 
   }
 #endif
 };

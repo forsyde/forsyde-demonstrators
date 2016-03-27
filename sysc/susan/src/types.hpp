@@ -12,10 +12,10 @@ using namespace ForSyDe::SDF;
 
 typedef unzipN<MCU_BLOCK, EdgeStrength, EdgeDirection> SusanDirectionOutUnzipper;
 
-TYPEDEF (SusanUsanOutputType,      token_tuple<MCU_BLOCK, EdgeStrength>);
-TYPEDEF (SusanDirectionOutputType, token_tuple<MCU_BLOCK, EdgeStrength, EdgeDirection>) ;
-TYPEDEF (SusanThinOutputType,      token_tuple<MCU_BLOCK, EdgeDirection>) ;
-TYPEDEF (SusanImageOutputType,     token_tuple<uchar, uchar, Image>) ;
+TYPEDEF (SusanUsanOutputType,      token_tuple<MCU_BLOCK, EdgeStrength>) {}
+TYPEDEF (SusanDirectionOutputType, token_tuple<MCU_BLOCK, EdgeStrength, EdgeDirection>) {}
+TYPEDEF (SusanThinOutputType,      token_tuple<MCU_BLOCK, EdgeDirection>) {}
+TYPEDEF (SusanImageOutputType,     token_tuple<uchar, uchar, Image>) {}
 
 
 DEFINE_TYPE_STREAM(MCU_BLOCK) {}

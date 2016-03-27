@@ -16,6 +16,7 @@
 #include <forsyde.hpp>
 
 using namespace ForSyDe::SDF;
+using namespace ForSyDe;
 
 typedef token_tuple<
         float,              // dummyCounter
