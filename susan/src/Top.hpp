@@ -146,10 +146,11 @@ SC_MODULE(Top) {
 #ifdef FORSYDE_INTROSPECTION
 
   void start_of_simulation() {
-    ForSyDe::XMLExport dumper("ir/");
+    system("mkdir -p xml");
+    ForSyDe::XMLExport dumper("xml/");
     dumper.traverse(this);
 #ifdef FORSYDE_TYPE_INTROSPECTION
-    TypeContainer::get().printXML("ir/types.xml");
+    TypeContainer::get().printXML("xml/types.xml");
 #endif 
   }
 #endif
